@@ -76,13 +76,13 @@
     "start": {
       "command": "npm-run-all -p watch-css start-js",
       "env": {
-        "REACT_APP_API_URL": "XXXXXXX"
+        "REACT_APP_API_URL": "http://develop.endless.team:8090/aqua/eeff"
       }
     },
     "build": {
       "command": "npm-run-all build-css build-js",
       "env": {
-        "REACT_APP_API_URL": "XXXXXXX",
+        "REACT_APP_API_URL": "http://develop.endless.team:8090/aqua/eeff",
         "GENERATE_SOURCEMAP": "false"
       }
     },
