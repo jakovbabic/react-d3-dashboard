@@ -1,0 +1,10 @@
+@import '../../styles/colors';
+.Navbar{
+  color: $mediumGray !important;
+  button{
+    text-transform: none !important;
+  }
+}
+.grow{
+  flex-grow: 1;
+}
