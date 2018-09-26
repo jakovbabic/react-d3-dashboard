@@ -41,5 +41,17 @@ export default {
     mainpage: {
       wellcome: 'Wellcome to EEFF',
     },
+    dashboard: {
+      title: 'Todas tus vistas',
+      createDashboard: 'Create Dashboard',
+      public: 'Public',
+      applicant: 'Applicie',
+    },
+    navbar: {
+      logo: 'Logotipo',
+      first: 'Inicio',
+      second: 'Estados Financieros',
+      third: 'Epigrafes',
+    },
   },
 };

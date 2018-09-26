@@ -41,5 +41,17 @@ export default {
     mainpage: {
       wellcome: 'Bienvenido a EEFF ',
     },
+    dashboard: {
+      title: 'Dashboard',
+      createDashboard: 'CreateDashboard',
+      public: 'Public',
+      applicant: 'Applicant',
+    },
+    navbar: {
+      logo: 'logoriop',
+      first: 'Home',
+      second: '',
+      third: '',
+    },
   },
 };

@@ -7,6 +7,7 @@ export default {
   global: {
     loading: false,
   },
+  dashboard: {},
   login: {
     error: '',
   },
