@@ -12,17 +12,20 @@
       flex-grow: 0.5;
     }
   }
-  &--list{
-    padding: 20px !important;
-    border: solid 2px $bgDarkGray;
-    background: $white;
-    &__list-item{
-      border: solid 2px $bgDarkGray;
-      margin-bottom: 10px;
-    }
-    button{
-      margin-right: 20px;
-      text-transform: none !important;
+  &--graph{
+    &__item{
+      padding: 20px !important;
+      position: relative;
+      &--setting{
+        position: absolute !important;
+        right: 0px;
+        top: 0px;
+      }
+      img{
+        position: absolute !important;
+        right: 30px;
+        bottom: 20px;
+      }
     }
   }
 }
