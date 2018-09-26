@@ -69,9 +69,11 @@ class DashboardPage extends Component {
                   <ListItemIcon>
                     <PieChart />
                   </ListItemIcon>
-                  <ListItemText
-                    primary={item.name}
-                  />
+                  <a href={`dashboardview/${item.viewId}`}>
+                    <ListItemText
+                      primary={item.name}
+                    />
+                  </a>
                   <ListItemSecondaryAction>
                     <Button aria-label="Add">
                       { literals.public } &nbsp;
@@ -84,7 +86,7 @@ class DashboardPage extends Component {
                 </ListItem>
               );
             })
-          }
+            }
           </List>
         </div>
       </div>

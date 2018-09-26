@@ -47,11 +47,16 @@ export default {
       public: 'Public',
       applicant: 'Applicant',
     },
+    dashboardview: {
+      dashboardLink: 'Dashboard',
+    },
     navbar: {
       logo: 'logoriop',
       first: 'Home',
       second: '',
       third: '',
+      profile: 'My Profile',
+      logout: 'Logout',
     },
   },
 };

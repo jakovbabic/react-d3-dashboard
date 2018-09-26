@@ -66,8 +66,8 @@ class Navbar extends React.Component {
                 open={open}
                 onClose={this.handleClose}
               >
-                <MenuItem>Profile</MenuItem>
-                <MenuItem>My account</MenuItem>
+                <MenuItem>{ literals.profile }</MenuItem>
+                <MenuItem>{ literals.logout }</MenuItem>
               </Menu>
             </div>
           </Toolbar>

@@ -47,11 +47,16 @@ export default {
       public: 'Public',
       applicant: 'Applicie',
     },
+    dashboardview: {
+      dashboardLink: 'Dashboard',
+    },
     navbar: {
       logo: 'Logotipo',
       first: 'Inicio',
       second: 'Estados Financieros',
       third: 'Epigrafes',
+      profile: 'My Profile',
+      logout: 'Logout',
     },
   },
 };

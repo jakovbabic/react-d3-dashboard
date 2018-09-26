@@ -8,6 +8,7 @@ export default {
     loading: false,
   },
   dashboard: {},
+  dashboardView: {},
   login: {
     error: '',
   },

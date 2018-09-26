@@ -6,3 +6,10 @@ export function loadDashboard() {
     { endPoint: 'views' },
   );
 }
+
+export function loadDashboardView(id) {
+  return apiFetch(
+    'GET',
+    { endPoint: `views/${id}` },
+  );
+}

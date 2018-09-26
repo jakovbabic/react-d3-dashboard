@@ -1,6 +1,7 @@
 import NotFound from './NotFound';
 import MainPage from './MainPage';
 import DashboardPage from './DashboardPage';
+import DashboardView from './DashboardView';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -8,6 +9,7 @@ export const BASEROUTE = '/';
 
 export const ROUTE_MAIN_PAGE = '/main';
 export const ROUTE_DASHBOARD_PAGE = '/dashboard';
+export const ROUTE_DASHBOARD_VIEW = '/dashboardview/:id';
 export const ROUTE_LOGIN = '/login';
 export const ROUTE_LOGOUT = '/logout';
 export const ROUTE_SIGNUP = '/signup';
@@ -30,6 +32,13 @@ export const routes = [
   {
     path: ROUTE_DASHBOARD_PAGE,
     component: DashboardPage,
+    exact: false,
+    header: true,
+    ignoreSession: false,
+  },
+  {
+    path: ROUTE_DASHBOARD_VIEW,
+    component: DashboardView,
     exact: false,
     header: true,
     ignoreSession: false,
