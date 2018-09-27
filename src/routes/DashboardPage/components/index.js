@@ -14,7 +14,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Navbar from '../../../components/Navbar/container/index';
-import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from './constants';
+import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
 
 /**
  * @name MainPage
@@ -29,6 +29,7 @@ class DashboardPage extends Component {
   static propTypes = {
     loadDashboards: PropTypes.func.isRequired,
     dashboards: PropTypes.array.isRequired,
+    search: PropTypes.func.isRequired,
     literals: PropTypes.object.isRequired,
   };
 
@@ -37,6 +38,12 @@ class DashboardPage extends Component {
     loadDashboards();
   }
 
+  search = (e) => {
+    const val = e.target.value;
+    const { search } = this.props;
+    search(val);
+    return false;
+  }
   /**
    * @name setLoadedState
    * Sets loaded state
@@ -60,7 +67,8 @@ class DashboardPage extends Component {
                 <Add className='mlr15' />
               </Button>
               <Button variant='contained' aria-label='Add' className='Dashboard--top--btns--btn'>
-                <SearchIcon />
+                <input className='Dashboard--top--btns--btn--search-field' type='text' placeholder={literals.search} onKeyUp={this.search} />
+                <SearchIcon className='Dashboard--top--btns--btn--search-submit' />
               </Button>
             </div>
           </div>
@@ -68,10 +76,10 @@ class DashboardPage extends Component {
             { dashboards && dashboards.map((item, i) => {
               let icon = '';
               let url = '';
-              if (item.type === DASHBOARD_TYPE_TABLE){
+              if (item.type === DASHBOARD_TYPE_TABLE) {
                 icon = <TableChart />;
                 url = 'table';
-              } else if (item.type === DASHBOARD_TYPE_GRAPH){
+              } else if (item.type === DASHBOARD_TYPE_GRAPH) {
                 icon = <PieChart />;
                 url = 'dashboardview';
               }

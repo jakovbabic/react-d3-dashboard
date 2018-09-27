@@ -45,6 +45,7 @@ export default {
       title: 'Dashboard',
       createDashboard: 'CreateDashboard',
       public: 'Public',
+      search: 'Search',
       applicant: 'Applicant',
     },
     dashboardview: {

@@ -13,6 +13,33 @@
         margin-right: 20px !important;
         color: $darkGray !important;
         background: $white !important;
+        &--search-field{
+          background-color: transparent;
+          border: none;
+          border-bottom: 1px solid rgba(black,.5) !important; // Add an !important for CodePen because it's adding inline styles when focused
+          box-sizing: border-box;
+          cursor: pointer;
+          font-weight: 300;
+          opacity: 0;
+          padding-right: 30px;
+          width: 0;
+          z-index: 3;
+          &:focus {
+            cursor: text;
+            opacity: 1;
+            outline: none;
+            width: 100%;
+            padding-right: 0px;
+            z-index: 1;
+          }
+        }
+        &--search-submit{
+          background-color: transparent;
+          border: none;
+          position: absolute;
+          right: 20px;
+          z-index: 2;
+        }
       }
     }
     &--title, &--btns{

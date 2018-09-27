@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { BarChart, PieChart } from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Navbar from '../../../components/Navbar/container/index';
-import { GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE } from './constants';
+import { GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE } from '../../../constants/dashboard';
 
 /**
  * @name MainPage
@@ -68,7 +68,7 @@ class DashboardView extends Component {
     if (item.type === GRAPH_TYPE_INDICATOR) {
       const title = item.eeff[0].values[0].calcValue;
       const subtitle = item.name;
-      const img = <img src={require('assets/images/logo.png')} alt='test' width='50px' height='50px' />;
+      const img = <img src={require(`assets/images/indicators/${item.image}`)} alt='test' width='50px' height='50px' />;
       return (
         <div>
           <h3>{ title }</h3>
@@ -150,7 +150,11 @@ class DashboardView extends Component {
         </div>
       );
     }
-    return true;
+    return (
+      <div>
+        sdf
+      </div>
+    );
   };
 
   render() {

@@ -11,6 +11,7 @@ import {
   FETCH_DASHBOARDS_INIT,
   FETCH_DASHBOARDS_SUCCESS,
   FETCH_DASHBOARDS_FAILURE,
+  SEARCH_DASHBOARDS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -33,12 +34,10 @@ export function fetchDashboardsFailed(error) {
   };
 }
 
-export default function fetchdashboardsAction() {
+export function fetchdashboardsAction() {
   return (dispatch) => {
     dispatch(loadingAction(true));
     dispatch(fetchDashboardsInit());
-    // const rlt = JSON.parse('[{"viewId":"1","name":"Tesla Motors - Vista General","type":"Table"},{"viewId":"2","name":"Tesla Motors - Vista Anual","type":"Graph"},{"viewId":"3","name":"Tesla Motors - Vista por Trimestres","type":"Graph"},{"viewId":"4","name":"Tesla Motors - Vista por Cuatrimestres","type":"Table"},{"viewId":"5","name":"Dashboard Tesla","type":"Table"},{"viewId":"6","name":"Tesla Motors - Vista Anual","type":"Graph"}]');
-    // return dispatch(fetchDashboardsSuccess(rlt));
     return new Promise((resolve) => {
       loadDashboard().then((res) => {
         dispatch(fetchDashboardsSuccess(res));
@@ -46,5 +45,13 @@ export default function fetchdashboardsAction() {
         resolve(true);
       });
     });
+  };
+}
+
+
+export function searchdashboardsAction(key) {
+  return {
+    type: SEARCH_DASHBOARDS,
+    payload: key,
   };
 }

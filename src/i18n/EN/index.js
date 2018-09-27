@@ -45,6 +45,7 @@ export default {
       title: 'Todas tus vistas',
       createDashboard: 'Create Dashboard',
       public: 'Public',
+      search: 'Search',
       applicant: 'Applicie',
     },
     dashboardview: {
