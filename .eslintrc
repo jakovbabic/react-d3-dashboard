@@ -17,6 +17,8 @@
     "prefer-destructuring": 0,
     "global-require": 0,
     "max-len": 0,
+    "linebreak-style": 0,
+    "arrow-body-style": 0,
     "import/no-unresolved": 0,
     "import/prefer-default-export": 0,
     "import/no-extraneous-dependencies": 0,
