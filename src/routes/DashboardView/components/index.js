@@ -10,7 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import { BarChart, PieChart } from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Navbar from '../../../components/Navbar/container/index';
-import { GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE } from '../../../constants/dashboard';
+import {
+  GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE, GRAPH_TYPE_GROUP_BAR,
+} from '../../../constants/dashboard';
 
 /**
  * @name MainPage
@@ -140,6 +142,43 @@ class DashboardView extends Component {
                 label: item.epigraph[0].name,
               }
             }
+            margin={
+              {
+                top: 10, bottom: 30, left: 100, right: 0,
+              }
+            }
+            tooltipHtml={this.tooltip}
+          />
+        </div>
+      );
+    }
+    if (item.type === GRAPH_TYPE_GROUP_BAR) {
+      const title = item.name;
+      const grdata = item.eeff.map((p) => {
+        const pi = {
+          label: p.name,
+          values: [],
+        };
+        item.epigraph.forEach((val, key) => {
+          pi.values.push({
+            x: val.name,
+            y: p.values[key].calcValue,
+          });
+        });
+        return pi;
+      });
+      const scale = () => {
+        return '#555555';
+      };
+      return (
+        <div className='text-align-center'>
+          <h5 className='text-align-left'>{ title }</h5>
+          <BarChart
+            groupedBars
+            data={grdata}
+            colorScale={scale}
+            width={400}
+            height={400}
             margin={
               {
                 top: 10, bottom: 30, left: 100, right: 0,
