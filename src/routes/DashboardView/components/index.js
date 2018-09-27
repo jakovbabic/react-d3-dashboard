@@ -57,14 +57,14 @@ class DashboardView extends Component {
   };
 
   tooltip = (x, y, z) => {
-    if(z){
+    if (z) {
       return `x: ${x}, y: ${z}`;
     }
     return `x: ${x}, y: ${y}`;
   };
 
   makeTemplate = (item) => {
-    if(item.type === 1){
+    if (item.type === 1) {
       const title = item.eeff[0].values[0].calcValue;
       const subtitle = item.name;
       const img = <img src={require('assets/images/logo.png')} alt="test" width='50px' height='50px' />;
@@ -76,7 +76,7 @@ class DashboardView extends Component {
         </div>
       );
     }
-    if(item.type === 2){
+    if (item.type === 2) {
       const title = item.name;
       const gdata = item.epigraph.map((p, i) => {
         return {
@@ -105,7 +105,7 @@ class DashboardView extends Component {
         </div>
       );
     }
-    if(item.type === 3){
+    if (item.type === 3) {
       const title = item.name;
       const grdata = item.eeff.map((p) => {
         return {
@@ -116,7 +116,6 @@ class DashboardView extends Component {
       const data = [{
         values: grdata,
       }];
-      console.log(data);
       return (
         <div className='text-align-center'>
           <h5>{ title }</h5>
