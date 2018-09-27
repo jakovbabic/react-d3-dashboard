@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { BarChart, PieChart } from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Navbar from '../../../components/Navbar/container/index';
+import { GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE } from './constants';
 
 /**
  * @name MainPage
@@ -64,10 +65,10 @@ class DashboardView extends Component {
   };
 
   makeTemplate = (item) => {
-    if (item.type === 1) {
+    if (item.type === GRAPH_TYPE_INDICATOR) {
       const title = item.eeff[0].values[0].calcValue;
       const subtitle = item.name;
-      const img = <img src={require('assets/images/logo.png')} alt="test" width='50px' height='50px' />;
+      const img = <img src={require('assets/images/logo.png')} alt='test' width='50px' height='50px' />;
       return (
         <div>
           <h3>{ title }</h3>
@@ -76,7 +77,7 @@ class DashboardView extends Component {
         </div>
       );
     }
-    if (item.type === 2) {
+    if (item.type === GRAPH_TYPE_PIE) {
       const title = item.name;
       const gdata = item.epigraph.map((p, i) => {
         return {
@@ -84,17 +85,23 @@ class DashboardView extends Component {
           y: item.eeff[0].values[i].calcValue,
         };
       });
+      const scale = () => {
+        return '#555555';
+      };
       const data = {
         label: 'somethingA',
         values: gdata,
       };
       return (
         <div className='text-align-center'>
-          <h5>{ title }</h5>
+          <h5 className='text-align-left'>{ title }</h5>
           <PieChart
             data={data}
             width={400}
             height={400}
+            colorScale={scale}
+            outerRadius={100}
+            innerRadius={50}
             margin={
               {
                 top: 10, bottom: 10, left: 100, right: 100,
@@ -105,7 +112,7 @@ class DashboardView extends Component {
         </div>
       );
     }
-    if (item.type === 3) {
+    if (item.type === GRAPH_TYPE_BAR) {
       const title = item.name;
       const grdata = item.eeff.map((p) => {
         return {
@@ -116,13 +123,18 @@ class DashboardView extends Component {
       const data = [{
         values: grdata,
       }];
+      const scale = () => {
+        return '#555555';
+      };
       return (
         <div className='text-align-center'>
-          <h5>{ title }</h5>
+          <h5 className='text-align-left'>{ title }</h5>
           <BarChart
             data={data}
             width={400}
             height={400}
+            opacity={70}
+            colorScale={scale}
             yAxis={
               {
                 label: item.epigraph[0].name,
@@ -155,14 +167,14 @@ class DashboardView extends Component {
             </h4>
             <div className='DashboardView--top--option text-align-right'>
               <IconButton
-                aria-haspopup="true"
+                aria-haspopup='true'
                 onClick={this.handleClick}
-                color="inherit"
+                color='inherit'
               >
                 <MoreHoriz />
               </IconButton>
               <Menu
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorEl}
                 open={open}
                 onClose={this.handleClose}

@@ -53,11 +53,11 @@ class DashboardPage extends Component {
               { literals.title }
             </h4>
             <div className='Dashboard--top--btns text-align-right'>
-              <Button variant="contained" className='Dashboard--top--btns--btn'>
+              <Button variant='contained' className='Dashboard--top--btns--btn'>
                 { literals.createDashboard }
                 <Add className='mlr15' />
               </Button>
-              <Button variant="contained" aria-label="Add" className='Dashboard--top--btns--btn'>
+              <Button variant='contained' aria-label='Add' className='Dashboard--top--btns--btn'>
                 <SearchIcon />
               </Button>
             </div>
@@ -75,11 +75,11 @@ class DashboardPage extends Component {
                     />
                   </a>
                   <ListItemSecondaryAction>
-                    <Button aria-label="Add">
+                    <Button aria-label='Add'>
                       { literals.public } &nbsp;
                       <Visibility />
                     </Button>
-                    <Button aria-label="Add">
+                    <Button aria-label='Add'>
                       { literals.applicant }
                     </Button>
                   </ListItemSecondaryAction>

@@ -35,33 +35,33 @@ class Navbar extends React.Component {
     const { literals } = this.props;
     return (
       <div>
-        <AppBar position="static" className='Navbar' color='default'>
+        <AppBar position='static' className='Navbar' color='default'>
           <Toolbar>
-            <Typography variant="title" className='grow text-align-left'>
+            <Typography variant='title' className='grow text-align-left'>
               { literals.logo }
             </Typography>
-            <Button color="inherit">
+            <Button color='inherit'>
               <Home className='mlr15' />
               { literals.first }
             </Button>
-            <Button color="inherit">
+            <Button color='inherit'>
               <FileCopy className='mlr15' />
               { literals.second }
             </Button>
-            <Button color="inherit">
+            <Button color='inherit'>
               <Home className='mlr15' />
               { literals.third }
             </Button>
             <div>
               <IconButton
-                aria-haspopup="true"
+                aria-haspopup='true'
                 onClick={this.handleClick}
-                color="inherit"
+                color='inherit'
               >
                 <AccountCircle />
               </IconButton>
               <Menu
-                id="menu-appbar"
+                id='menu-appbar'
                 anchorEl={anchorEl}
                 open={open}
                 onClose={this.handleClose}

@@ -41,10 +41,7 @@ export default function fetchdashboardsAction() {
     // return dispatch(fetchDashboardsSuccess(rlt));
     return new Promise((resolve) => {
       loadDashboard().then((res) => {
-        const rlt = res.filter((e) => {
-          return e.type === 'Table';
-        });
-        dispatch(fetchDashboardsSuccess(rlt));
+        dispatch(fetchDashboardsSuccess(res));
         dispatch(loadingAction(false));
         resolve(true);
       });
