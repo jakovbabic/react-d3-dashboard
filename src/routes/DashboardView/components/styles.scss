@@ -2,6 +2,17 @@
 .DashboardView {
   padding: 20px;
   background: $bgLightGray;
+  &__Dialog{
+    & > div:nth-child(2){
+      width: 50%;
+    }
+  }
+  &__AddModal{
+    &--formControl{
+      width: 100%;
+      margin-bottom: 20px !important;
+    }
+  }
   &__logo {
     width: 40rem;
     margin: 10% auto 0;

@@ -13,3 +13,10 @@ export function loadDashboardView(id) {
     { endPoint: `views/${id}` },
   );
 }
+
+export function loadOptions() {
+  return apiFetch(
+    'GET',
+    { endPoint: 'views/graph/types' },
+  );
+}

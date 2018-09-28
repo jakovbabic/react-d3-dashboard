@@ -50,6 +50,14 @@ export default {
     },
     dashboardview: {
       dashboardLink: 'Dashboard',
+      addGraph: 'Create Graph',
+      modal: {
+        name: 'Name',
+        type: 'Type',
+        dashboard: 'Dashboard',
+        ok: 'OK',
+        cancel: 'Cancel',
+      },
     },
     navbar: {
       logo: 'Logotipo',

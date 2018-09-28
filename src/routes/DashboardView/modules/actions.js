@@ -4,13 +4,15 @@ import {
 } from 'store/globalState/global';
 
 import {
-  loadDashboardView,
+  loadDashboardView, loadOptions, loadDashboard,
 } from '../../../services/DashboardService';
 
 import {
   FETCH_DASHBOARD_INIT,
   FETCH_DASHBOARD_SUCCESS,
   FETCH_DASHBOARD_FAILURE,
+  FETCH_TYPEOPTIONS_SUCCESS,
+  FETCH_TABLEOPTIONS_SUCCESS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -33,7 +35,47 @@ export function fetchDashboardsFailed(error) {
   };
 }
 
-export default function fetchdashboardsAction(id) {
+export function loadTypeOptionsSuccess(res) {
+  return {
+    type: FETCH_TYPEOPTIONS_SUCCESS,
+    payload: res,
+  };
+}
+
+export function loadTableOptionsSuccess(res) {
+  return {
+    type: FETCH_TABLEOPTIONS_SUCCESS,
+    payload: res,
+  };
+}
+
+export function loadTypeOptionsAction() {
+  return (dispatch) => {
+    dispatch(loadingAction(true));
+    return new Promise((resolve) => {
+      loadOptions().then((res) => {
+        dispatch(loadTypeOptionsSuccess(res));
+        dispatch(loadingAction(false));
+        resolve(true);
+      });
+    });
+  };
+}
+
+export function loadTableOptionsAction() {
+  return (dispatch) => {
+    dispatch(loadingAction(true));
+    return new Promise((resolve) => {
+      loadDashboard().then((res) => {
+        dispatch(loadTableOptionsSuccess(res));
+        dispatch(loadingAction(false));
+        resolve(true);
+      });
+    });
+  };
+}
+
+export function fetchdashboardsAction(id) {
   return (dispatch) => {
     dispatch(loadingAction(true));
     dispatch(fetchDashboardsInit());

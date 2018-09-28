@@ -9,11 +9,16 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { BarChart, PieChart } from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import AddModalContent from './AddModalContent';
 import Navbar from '../../../components/Navbar/container/index';
 import {
   GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE, GRAPH_TYPE_GROUP_BAR,
 } from '../../../constants/dashboard';
-
 /**
  * @name MainPage
  *
@@ -23,21 +28,31 @@ import {
  *
  * @returns {JSX}
  */
+
 class DashboardView extends Component {
   static propTypes = {
     loadDashboards: PropTypes.func.isRequired,
+    loadTypeOptions: PropTypes.func.isRequired,
+    loadTableOptions: PropTypes.func.isRequired,
     dashboard: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     literals: PropTypes.object.isRequired,
+    typeOptions: PropTypes.array.isRequired,
+    tableOptions: PropTypes.array.isRequired,
   };
 
   state = {
     anchorEl: null,
+    modalOpen: false,
   };
 
   componentDidMount() {
-    const { loadDashboards, match } = this.props;
+    const {
+      loadTypeOptions, loadDashboards, match, loadTableOptions,
+    } = this.props;
     loadDashboards(match.params.id);
+    loadTypeOptions();
+    loadTableOptions();
   }
 
   handleClick = (event) => {
@@ -64,6 +79,14 @@ class DashboardView extends Component {
       return `x: ${x}, y: ${z}`;
     }
     return `x: ${x}, y: ${y}`;
+  };
+
+  addModalOpen = () => {
+    this.setState({ modalOpen: true });
+  };
+
+  addModalClose = () => {
+    this.setState({ modalOpen: false });
   };
 
   makeTemplate = (item) => {
@@ -197,13 +220,35 @@ class DashboardView extends Component {
   };
 
   render() {
-    const { dashboard, literals } = this.props;
-    const { anchorEl } = this.state;
+    const {
+      dashboard, literals, typeOptions, tableOptions,
+    } = this.props;
+    const { anchorEl, modalOpen } = this.state;
     const open = Boolean(anchorEl);
     return (
       <div>
         <Navbar />
         <div className='DashboardView'>
+          <Dialog
+            open={modalOpen}
+            onClose={this.addModalClose}
+            className='DashboardView__Dialog'
+          >
+            <DialogTitle>
+              { literals.addGraph }
+            </DialogTitle>
+            <DialogContent>
+              <AddModalContent literals={literals} typeOptions={typeOptions} tableOptions={tableOptions} />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.addModalClose}>
+                { literals.modal.cancel }
+              </Button>
+              <Button onClick={this.handleClose}>
+                { literals.modal.ok }
+              </Button>
+            </DialogActions>
+          </Dialog>
           <div className='DashboardView--top'>
             <h4 className='DashboardView--top--title text-align-left'>
               { dashboard.name }
@@ -223,6 +268,7 @@ class DashboardView extends Component {
                 onClose={this.handleClose}
               >
                 <MenuItem><a href='/dashboard'>{ literals.dashboardLink }</a></MenuItem>
+                <MenuItem><a onClick={this.addModalOpen}>{ literals.addGraph }</a></MenuItem>
               </Menu>
             </div>
           </div>
