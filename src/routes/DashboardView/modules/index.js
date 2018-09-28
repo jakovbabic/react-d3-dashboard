@@ -6,7 +6,9 @@ import {
   FETCH_DASHBOARD_FAILURE,
   FETCH_TYPEOPTIONS_SUCCESS,
   FETCH_TABLEOPTIONS_SUCCESS,
+  DASHBOARD_CHANGED_SUCCESS,
 } from './types';
+
 import { DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
 
 export default function dashboardViewReducer(state = initialState.dashboard, action) {
@@ -15,6 +17,9 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       return { ...state, dashboard: {}, error: '' };
     case FETCH_DASHBOARD_SUCCESS:
       return { ...state, dashboard: action.payload, error: '' };
+    case DASHBOARD_CHANGED_SUCCESS:
+      console.log(action.payload);
+      return { ...state, selectedTable: action.payload };
     case FETCH_DASHBOARD_FAILURE:
       return { ...state, dashboard: {} };
     case FETCH_TYPEOPTIONS_SUCCESS: {

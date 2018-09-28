@@ -34,7 +34,9 @@ class DashboardView extends Component {
     loadDashboards: PropTypes.func.isRequired,
     loadTypeOptions: PropTypes.func.isRequired,
     loadTableOptions: PropTypes.func.isRequired,
+    dashboardChange: PropTypes.func.isRequired,
     dashboard: PropTypes.object.isRequired,
+    selectedTable: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     literals: PropTypes.object.isRequired,
     typeOptions: PropTypes.array.isRequired,
@@ -69,10 +71,6 @@ class DashboardView extends Component {
    *
    * @param {Boolean} loaded
    */
-
-  makeTemplate = () => {
-    this.setState({ anchorEl: null });
-  };
 
   tooltip = (x, y, z) => {
     if (z) {
@@ -221,7 +219,12 @@ class DashboardView extends Component {
 
   render() {
     const {
-      dashboard, literals, typeOptions, tableOptions,
+      dashboard,
+      literals,
+      typeOptions,
+      tableOptions,
+      selectedTable,
+      dashboardChange,
     } = this.props;
     const { anchorEl, modalOpen } = this.state;
     const open = Boolean(anchorEl);
@@ -238,7 +241,7 @@ class DashboardView extends Component {
               { literals.addGraph }
             </DialogTitle>
             <DialogContent>
-              <AddModalContent literals={literals} typeOptions={typeOptions} tableOptions={tableOptions} />
+              <AddModalContent literals={literals} selectedTable={selectedTable} typeOptions={typeOptions} tableOptions={tableOptions} dashboardChange={dashboardChange} />
             </DialogContent>
             <DialogActions>
               <Button onClick={this.addModalClose}>

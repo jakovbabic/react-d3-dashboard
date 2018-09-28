@@ -4,7 +4,9 @@ import {
 } from 'store/globalState/global';
 
 import {
-  loadDashboardView, loadOptions, loadDashboard,
+  loadDashboardView,
+  loadOptions,
+  loadDashboard,
 } from '../../../services/DashboardService';
 
 import {
@@ -13,6 +15,7 @@ import {
   FETCH_DASHBOARD_FAILURE,
   FETCH_TYPEOPTIONS_SUCCESS,
   FETCH_TABLEOPTIONS_SUCCESS,
+  DASHBOARD_CHANGED_SUCCESS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -45,6 +48,14 @@ export function loadTypeOptionsSuccess(res) {
 export function loadTableOptionsSuccess(res) {
   return {
     type: FETCH_TABLEOPTIONS_SUCCESS,
+    payload: res,
+  };
+}
+
+
+export function dashboardChangeSuccess(res) {
+  return {
+    type: DASHBOARD_CHANGED_SUCCESS,
     payload: res,
   };
 }
@@ -82,6 +93,19 @@ export function fetchdashboardsAction(id) {
     return new Promise((resolve) => {
       loadDashboardView(id).then((res) => {
         dispatch(fetchDashboardsSuccess(res));
+        dispatch(loadingAction(false));
+        resolve(true);
+      });
+    });
+  };
+}
+
+export function dashboardChangeAction(id) {
+  return (dispatch) => {
+    dispatch(loadingAction(true));
+    return new Promise((resolve) => {
+      loadDashboardView(id).then((res) => {
+        dispatch(dashboardChangeSuccess(res));
         dispatch(loadingAction(false));
         resolve(true);
       });

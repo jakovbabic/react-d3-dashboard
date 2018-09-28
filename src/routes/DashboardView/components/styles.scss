@@ -10,7 +10,22 @@
   &__AddModal{
     &--formControl{
       width: 100%;
-      margin-bottom: 20px !important;
+      margin-bottom: 10px !important;
+    }
+    &--ImageContainer{
+      border: solid 1px $lightGray;
+      .hidden{
+        display: none;
+      }
+      img{
+        border: solid 1px $lightGray;
+        padding: 10px;
+        margin: 10px;
+        &.active{
+          border: solid 1px $black;
+          box-shadow: 0px 0px 3px 4px rgba(0,0,0,0.4);
+        }
+      }
     }
   }
   &__logo {
