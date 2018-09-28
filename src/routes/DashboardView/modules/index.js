@@ -18,7 +18,6 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
     case FETCH_DASHBOARD_SUCCESS:
       return { ...state, dashboard: action.payload, error: '' };
     case DASHBOARD_CHANGED_SUCCESS:
-      console.log(action.payload);
       return { ...state, selectedTable: action.payload };
     case FETCH_DASHBOARD_FAILURE:
       return { ...state, dashboard: {} };

@@ -7,7 +7,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { BarChart, PieChart } from 'react-d3-components';
+import {
+  BarChart,
+  PieChart,
+  LineChart,
+  AreaChart,
+} from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -17,7 +22,12 @@ import Button from '@material-ui/core/Button';
 import AddModalContent from './AddModalContent';
 import Navbar from '../../../components/Navbar/container/index';
 import {
-  GRAPH_TYPE_BAR, GRAPH_TYPE_INDICATOR, GRAPH_TYPE_PIE, GRAPH_TYPE_GROUP_BAR,
+  GRAPH_TYPE_BAR,
+  GRAPH_TYPE_INDICATOR,
+  GRAPH_TYPE_PIE,
+  GRAPH_TYPE_GROUP_BAR,
+  GRAPH_TYPE_LINE,
+  GRAPH_TYPE_AREA,
 } from '../../../constants/dashboard';
 /**
  * @name MainPage
@@ -206,6 +216,83 @@ class DashboardView extends Component {
               }
             }
             tooltipHtml={this.tooltip}
+          />
+        </div>
+      );
+    }
+    if (item.type === GRAPH_TYPE_LINE) {
+      const title = item.name;
+      const grdata = item.eeff.map((p) => {
+        return {
+          x: p.name,
+          y: p.values[0].calcValue,
+        };
+      });
+      const data = [{
+        values: grdata,
+      }];
+      const scale = () => {
+        return '#555555';
+      };
+      return (
+        <div className='text-align-center'>
+          <h5 className='text-align-left'>{ title }</h5>
+          <LineChart
+            groupedBars
+            data={data}
+            colorScale={scale}
+            width={400}
+            height={400}
+            yAxis={
+              {
+                label: item.epigraph[0].name,
+              }
+            }
+            margin={
+              {
+                top: 10, bottom: 30, left: 20, right: 0,
+              }
+            }
+          />
+        </div>
+      );
+    }
+    if (item.type === GRAPH_TYPE_AREA) {
+      const title = item.name;
+      const grdata = item.eeff.map((p) => {
+        const pi = {
+          label: p.name,
+          values: [],
+        };
+        item.epigraph.forEach((val, key) => {
+          pi.values.push({
+            x: val.name,
+            y: p.values[key].calcValue,
+          });
+        });
+        return pi;
+      });
+      const scale = () => {
+        return '#555555';
+      };
+      return (
+        <div className='text-align-center'>
+          <h5 className='text-align-left'>{ title }</h5>
+          <AreaChart
+            data={grdata}
+            colorScale={scale}
+            width={400}
+            height={400}
+            yAxis={
+              {
+                label: item.epigraph[0].name,
+              }
+            }
+            margin={
+              {
+                top: 10, bottom: 30, left: 20, right: 0,
+              }
+            }
           />
         </div>
       );

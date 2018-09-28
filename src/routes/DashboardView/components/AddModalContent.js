@@ -72,7 +72,7 @@ class AddModalContent extends Component {
       const p = item;
       if (i === key) {
         p.active = 1;
-      }else {
+      } else {
         p.active = 0;
       }
       rlt.push(p);
