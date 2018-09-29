@@ -44,6 +44,7 @@ class DashboardView extends Component {
     loadDashboards: PropTypes.func.isRequired,
     loadTypeOptions: PropTypes.func.isRequired,
     loadTableOptions: PropTypes.func.isRequired,
+    cancelModal: PropTypes.func.isRequired,
     dashboardChange: PropTypes.func.isRequired,
     dashboard: PropTypes.object.isRequired,
     selectedTable: PropTypes.object.isRequired,
@@ -95,6 +96,10 @@ class DashboardView extends Component {
 
   addModalClose = () => {
     this.setState({ modalOpen: false });
+    const {
+      cancelModal,
+    } = this.props;
+    cancelModal();
   };
 
   makeTemplate = (item) => {

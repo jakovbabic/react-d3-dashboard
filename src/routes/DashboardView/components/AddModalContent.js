@@ -11,7 +11,6 @@ import {
   GRAPH_TYPE_BAR,
   GRAPH_TYPE_LINE,
   GRAPH_TYPE_INDICATOR,
-  GRAPH_TYPE_PIE,
   INDICATOR_IMAGES,
 } from '../../../constants/dashboard';
 
@@ -134,7 +133,8 @@ class AddModalContent extends Component {
       value: state.tree,
       onChange: this.treeChange,
       className: 'DashboardView__AddModal--formControl',
-      treeCheckable: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
+      // treeCheckable: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
+      multiple: true,
       showCheckedStrategy: SHOW_PARENT,
       searchPlaceholder: 'Please select',
     };
@@ -166,6 +166,7 @@ class AddModalContent extends Component {
             <Dropdown options={p.typeOptions} value={state.type} onChange={this.typeChange} name='type' />
           </FormControl>
           <FormControl className='DashboardView__AddModal--formControl'>
+            <p>{ p.literals.modal.epigraph }</p>
             <TreeSelect {...tProps} />
           </FormControl>
           <FormControl className='DashboardView__AddModal--formControl'>

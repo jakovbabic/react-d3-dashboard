@@ -16,6 +16,7 @@ import {
   FETCH_TYPEOPTIONS_SUCCESS,
   FETCH_TABLEOPTIONS_SUCCESS,
   DASHBOARD_CHANGED_SUCCESS,
+  MODAL_CANCELLED,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -102,13 +103,19 @@ export function fetchdashboardsAction(id) {
 
 export function dashboardChangeAction(id) {
   return (dispatch) => {
-    dispatch(loadingAction(true));
     return new Promise((resolve) => {
       loadDashboardView(id).then((res) => {
         dispatch(dashboardChangeSuccess(res));
-        dispatch(loadingAction(false));
         resolve(true);
       });
+    });
+  };
+}
+
+export function cancelModalAction() {
+  return (dispatch) => {
+    dispatch({
+      type: MODAL_CANCELLED,
     });
   };
 }

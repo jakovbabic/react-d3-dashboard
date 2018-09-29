@@ -57,6 +57,7 @@ export default {
         dashboard: 'Dashboard',
         ok: 'OK',
         cancel: 'Cancel',
+        epigraph: 'Epigraph',
       },
     },
     navbar: {
