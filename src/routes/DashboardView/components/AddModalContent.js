@@ -61,6 +61,7 @@ class AddModalContent extends Component {
     eeff: [],
     width: 0,
     height: 0,
+    name: '',
   };
 
   componentDidMount() {
@@ -73,7 +74,7 @@ class AddModalContent extends Component {
     if (val === GRAPH_TYPE_INDICATOR) {
       this.setState({ width: 3, height: 3 });
     } else {
-      this.setState({ width: 4, height: 4 });
+      this.setState({ width: 4, height: 4, selectedImg: '' });
     }
   };
 
@@ -114,6 +115,10 @@ class AddModalContent extends Component {
     this.setState({ eeff: checkedVal });
   };
 
+  changeName = (e) => {
+    this.setState({ name: e.target.value });
+  };
+
   makeTree = (data) => {
     if (!data) {
       return [];
@@ -123,13 +128,13 @@ class AddModalContent extends Component {
       if (p.items && p.items.length > 0) {
         rlt.push({
           title: p.name,
-          value: p.name,
+          value: p.alias,
           children: this.makeTree(p.items),
         });
       } else {
         rlt.push({
           title: p.name,
-          value: p.name,
+          value: p.alias,
         });
       }
     });
@@ -164,13 +169,16 @@ class AddModalContent extends Component {
     }
     const data = {
       type: state.type,
-      sourceView: state.dashboard,
-      viewId: state.dashboard,
+      sourceView: parseInt(state.dashboard, 10),
+      viewId: parseInt(state.dashboard, 10),
       epigraph,
       image: state.selectedImg,
       eeff,
       width: state.width,
       height: state.height,
+      name: state.name,
+      position_x: '',
+      position_y: '',
     };
     const p = this.props;
     p.saveModal(data);
@@ -195,7 +203,7 @@ class AddModalContent extends Component {
     const eeff = p.selectedTable.eeff && p.selectedTable.eeff.map((item) => {
       return {
         label: item.name,
-        value: item.name,
+        value: item.alias,
       };
     });
     let checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
@@ -207,7 +215,7 @@ class AddModalContent extends Component {
         <form>
           <FormControl className='DashboardView__AddModal--formControl'>
             <InputLabel>{ p.literals.modal.name }</InputLabel>
-            <Input />
+            <Input onChange={this.changeName} />
           </FormControl>
           <FormControl className='DashboardView__AddModal--formControl'>
             <InputLabel>{ p.literals.modal.dashboard }</InputLabel>

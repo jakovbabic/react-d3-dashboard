@@ -51,6 +51,8 @@ export default {
     dashboardview: {
       dashboardLink: 'Dashboard',
       addGraph: 'Create Graph',
+      editGraph: 'Edit Graph',
+      deleteGraph: 'Delete Graph',
       modal: {
         name: 'Name',
         type: 'Type',
