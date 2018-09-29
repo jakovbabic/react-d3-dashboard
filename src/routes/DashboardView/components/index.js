@@ -15,10 +15,8 @@ import {
 } from 'react-d3-components';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
 import AddModalContent from './AddModalContent';
 import Navbar from '../../../components/Navbar/container/index';
 import {
@@ -44,6 +42,7 @@ class DashboardView extends Component {
     loadDashboards: PropTypes.func.isRequired,
     loadTypeOptions: PropTypes.func.isRequired,
     loadTableOptions: PropTypes.func.isRequired,
+    saveModal: PropTypes.func.isRequired,
     cancelModal: PropTypes.func.isRequired,
     dashboardChange: PropTypes.func.isRequired,
     dashboard: PropTypes.object.isRequired,
@@ -317,6 +316,7 @@ class DashboardView extends Component {
       tableOptions,
       selectedTable,
       dashboardChange,
+      saveModal,
     } = this.props;
     const { anchorEl, modalOpen } = this.state;
     const open = Boolean(anchorEl);
@@ -333,16 +333,8 @@ class DashboardView extends Component {
               { literals.addGraph }
             </DialogTitle>
             <DialogContent>
-              <AddModalContent literals={literals} selectedTable={selectedTable} typeOptions={typeOptions} tableOptions={tableOptions} dashboardChange={dashboardChange} />
+              <AddModalContent addModalClose={this.addModalClose} saveModal={saveModal} literals={literals} selectedTable={selectedTable} typeOptions={typeOptions} tableOptions={tableOptions} dashboardChange={dashboardChange} />
             </DialogContent>
-            <DialogActions>
-              <Button onClick={this.addModalClose}>
-                { literals.modal.cancel }
-              </Button>
-              <Button onClick={this.handleClose}>
-                { literals.modal.ok }
-              </Button>
-            </DialogActions>
           </Dialog>
           <div className='DashboardView--top'>
             <h4 className='DashboardView--top--title text-align-left'>

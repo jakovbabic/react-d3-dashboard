@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import { Radio, TreeSelect, Checkbox } from 'antd';
 import 'antd/dist/antd.min.css';
 import {
@@ -12,6 +13,7 @@ import {
   GRAPH_TYPE_LINE,
   GRAPH_TYPE_INDICATOR,
   INDICATOR_IMAGES,
+  GRAPH_TYPE_PIE,
 } from '../../../constants/dashboard';
 
 /**
@@ -55,7 +57,10 @@ class AddModalContent extends Component {
     type: '',
     images: [],
     tree: [],
+    selectedImg: '',
     eeff: [],
+    width: 0,
+    height: 0,
   };
 
   componentDidMount() {
@@ -63,7 +68,13 @@ class AddModalContent extends Component {
   }
 
   typeChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    const val = event.target.value;
+    this.setState({ [event.target.name]: val });
+    if (val === GRAPH_TYPE_INDICATOR) {
+      this.setState({ width: 3, height: 3 });
+    } else {
+      this.setState({ width: 4, height: 4 });
+    }
   };
 
   dashboardChange = (event) => {
@@ -76,16 +87,18 @@ class AddModalContent extends Component {
   imgClicked = (key) => {
     const state = this.state;
     const rlt = [];
+    let src = '';
     state.images.forEach((item, i) => {
       const p = item;
       if (i === key) {
         p.active = 1;
+        src = p.src;
       } else {
         p.active = 0;
       }
       rlt.push(p);
     });
-    this.setState({ images: rlt });
+    this.setState({ images: rlt, selectedImg: src });
   };
 
   treeChange = (value) => {
@@ -123,6 +136,46 @@ class AddModalContent extends Component {
     return rlt;
   };
 
+  graphSave = () => {
+    const state = this.state;
+    let eeff = [];
+    if (typeof state.eeff === 'string') {
+      eeff = [{
+        alias: state.eeff,
+      }];
+    } else {
+      eeff = state.eeff.map((e) => {
+        return {
+          alias: e,
+        };
+      });
+    }
+    let epigraph = [];
+    if (typeof state.tree === 'string') {
+      epigraph = [{
+        alias: state.tree,
+      }];
+    } else {
+      epigraph = state.tree.map((e) => {
+        return {
+          alias: e,
+        };
+      });
+    }
+    const data = {
+      type: state.type,
+      sourceView: state.dashboard,
+      viewId: state.dashboard,
+      epigraph,
+      image: state.selectedImg,
+      eeff,
+      width: state.width,
+      height: state.height,
+    };
+    const p = this.props;
+    p.saveModal(data);
+  }
+
   render() {
     const p = this.props;
     const state = this.state;
@@ -133,8 +186,7 @@ class AddModalContent extends Component {
       value: state.tree,
       onChange: this.treeChange,
       className: 'DashboardView__AddModal--formControl',
-      // treeCheckable: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
-      multiple: true,
+      multiple: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
       showCheckedStrategy: SHOW_PARENT,
       searchPlaceholder: 'Please select',
     };
@@ -170,6 +222,7 @@ class AddModalContent extends Component {
             <TreeSelect {...tProps} />
           </FormControl>
           <FormControl className='DashboardView__AddModal--formControl'>
+            <p>{ p.literals.modal.eeff }</p>
             { checkbox }
           </FormControl>
           {
@@ -183,6 +236,12 @@ class AddModalContent extends Component {
               }
             </div>
           }
+          <Button onClick={this.graphSave}>
+            { p.literals.modal.ok }
+          </Button>
+          <Button onClick={p.addModalClose}>
+            { p.literals.modal.cancel }
+          </Button>
         </form>
       </div>
     );

@@ -8,6 +8,7 @@ import {
   loadTableOptionsAction,
   dashboardChangeAction,
   cancelModalAction,
+  saveModalAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
@@ -27,6 +28,7 @@ function mapDispatchToProps(dispatch) {
     loadTableOptions: bindActionCreators(loadTableOptionsAction, dispatch),
     dashboardChange: bindActionCreators(dashboardChangeAction, dispatch),
     cancelModal: bindActionCreators(cancelModalAction, dispatch),
+    saveModal: bindActionCreators(saveModalAction, dispatch),
   };
 }
 

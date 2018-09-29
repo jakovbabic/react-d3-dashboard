@@ -52,7 +52,7 @@ export default async function apiFetch(method, url, params) {
         case 'POST':
         case 'PUT':
         default:
-          CONFIG.body = params;
+          CONFIG.body = JSON.stringify(params);
           break;
       }
     }

@@ -14,6 +14,14 @@ export function loadDashboardView(id) {
   );
 }
 
+export function saveModal(data) {
+  return apiFetch(
+    'POST',
+    { endPoint: `views/${data.viewId}/graph` },
+    data,
+  );
+}
+
 export function loadOptions() {
   return apiFetch(
     'GET',

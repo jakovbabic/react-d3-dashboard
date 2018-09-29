@@ -7,6 +7,7 @@ import {
   loadDashboardView,
   loadOptions,
   loadDashboard,
+  saveModal,
 } from '../../../services/DashboardService';
 
 import {
@@ -52,7 +53,6 @@ export function loadTableOptionsSuccess(res) {
     payload: res,
   };
 }
-
 
 export function dashboardChangeSuccess(res) {
   return {
@@ -106,6 +106,18 @@ export function dashboardChangeAction(id) {
     return new Promise((resolve) => {
       loadDashboardView(id).then((res) => {
         dispatch(dashboardChangeSuccess(res));
+        resolve(true);
+      });
+    });
+  };
+}
+
+export function saveModalAction(data) {
+  return (dispatch) => {
+    dispatch(loadingAction(true));
+    return new Promise((resolve) => {
+      saveModal(data).then(() => {
+        dispatch(loadingAction(false));
         resolve(true);
       });
     });

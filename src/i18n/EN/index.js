@@ -58,6 +58,7 @@ export default {
         ok: 'OK',
         cancel: 'Cancel',
         epigraph: 'Epigraph',
+        eeff: 'EEFF',
       },
     },
     navbar: {

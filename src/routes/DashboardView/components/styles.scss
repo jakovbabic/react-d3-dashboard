@@ -15,6 +15,7 @@
     }
     &--ImageContainer{
       border: solid 1px $lightGray;
+      margin-bottom: 20px;
       .hidden{
         display: none;
       }
@@ -27,6 +28,9 @@
           box-shadow: 0px 0px 3px 4px rgba(0,0,0,0.4);
         }
       }
+    }
+    button{
+      float: right;
     }
   }
   &__logo {
