@@ -3,13 +3,14 @@
   padding: 20px;
   background: $bgLightGray;
   &__Dialog{
+    z-index: 0 !important;
     & > div:nth-child(2){
       width: 50%;
     }
   }
   &__AddModal{
     &--formControl{
-      width: 100%;
+      width: 100% !important;
       margin-bottom: 10px !important;
     }
     &--ImageContainer{

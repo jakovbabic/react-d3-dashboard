@@ -5,11 +5,16 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormLabel from '@material-ui/core/FormLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { GRAPH_TYPE_INDICATOR, INDICATOR_IMAGES } from '../../../constants/dashboard';
+import { Radio, TreeSelect, Checkbox } from 'antd';
+import 'antd/dist/antd.min.css';
+import {
+  GRAPH_TYPE_BAR,
+  GRAPH_TYPE_LINE,
+  GRAPH_TYPE_INDICATOR,
+  GRAPH_TYPE_PIE,
+  INDICATOR_IMAGES,
+} from '../../../constants/dashboard';
+
 /**
  * @name MainPage
  *
@@ -43,11 +48,15 @@ const Dropdown = (props) => {
   );
 };
 
+const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+
 class AddModalContent extends Component {
   state = {
     dashboard: '',
     type: '',
     images: [],
+    tree: [],
+    eeff: [],
   };
 
   componentDidMount() {
@@ -80,10 +89,67 @@ class AddModalContent extends Component {
     this.setState({ images: rlt });
   };
 
+  treeChange = (value) => {
+    this.setState({ tree: value });
+  };
+
+  handleChangeEeff = (e) => {
+    const value = e.target.value;
+    this.setState({ eeff: value });
+  };
+
+  handleChangeEeffCheckbox = (checkedVal) => {
+    this.setState({ eeff: checkedVal });
+  };
+
+  makeTree = (data) => {
+    if (!data) {
+      return [];
+    }
+    const rlt = [];
+    data.forEach((p) => {
+      if (p.items && p.items.length > 0) {
+        rlt.push({
+          title: p.name,
+          value: p.name,
+          children: this.makeTree(p.items),
+        });
+      } else {
+        rlt.push({
+          title: p.name,
+          value: p.name,
+        });
+      }
+    });
+    return rlt;
+  };
+
   render() {
     const p = this.props;
     const state = this.state;
     const img = state.type === GRAPH_TYPE_INDICATOR ? 'DashboardView__AddModal--ImageContainer' : 'DashboardView__AddModal--ImageContainer hidden';
+    const treeData = this.makeTree(p.selectedTable.epigraph);
+    const tProps = {
+      treeData,
+      value: state.tree,
+      onChange: this.treeChange,
+      className: 'DashboardView__AddModal--formControl',
+      treeCheckable: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
+      showCheckedStrategy: SHOW_PARENT,
+      searchPlaceholder: 'Please select',
+    };
+    const RadioGroup = Radio.Group;
+    const CheckboxGroup = Checkbox.Group;
+    const eeff = p.selectedTable.eeff && p.selectedTable.eeff.map((item) => {
+      return {
+        label: item.name,
+        value: item.name,
+      };
+    });
+    let checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
+    if (state.type === GRAPH_TYPE_INDICATOR || ((state.type === GRAPH_TYPE_BAR || state.type === GRAPH_TYPE_LINE) && state.tree.length > 1)) {
+      checkbox = <RadioGroup onChange={this.handleChangeEeff} value={state.eeff} options={eeff} />;
+    }
     return (
       <div className='DashboardView__AddModal'>
         <form>
@@ -99,22 +165,11 @@ class AddModalContent extends Component {
             <InputLabel>{ p.literals.modal.type }</InputLabel>
             <Dropdown options={p.typeOptions} value={state.type} onChange={this.typeChange} name='type' />
           </FormControl>
-          <FormControl>
-            <FormLabel>Pick</FormLabel>
-            <FormGroup>
-              { p.selectedTable.eeff && p.selectedTable.eeff.map((item, i) => {
-                return (
-                  <FormControlLabel
-                    control={
-                      <Checkbox value='gilad' />
-                    }
-                    label={item.name}
-                    key={i}
-                  />
-                );
-              })
-              }
-            </FormGroup>
+          <FormControl className='DashboardView__AddModal--formControl'>
+            <TreeSelect {...tProps} />
+          </FormControl>
+          <FormControl className='DashboardView__AddModal--formControl'>
+            { checkbox }
           </FormControl>
           {
             <div className={img}>
