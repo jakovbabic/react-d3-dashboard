@@ -46,10 +46,12 @@ export default async function apiFetch(method, url, params) {
     if (typeof params === 'object') {
       switch (method) {
         case 'GET':
+        case 'DELETE':
           URL += transformGetParams(params);
           break;
 
         case 'POST':
+        case 'PUT':
         default:
           CONFIG.body = params;
           break;
