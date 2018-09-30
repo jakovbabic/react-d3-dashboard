@@ -181,6 +181,7 @@ class AddModalContent extends Component {
       position_y: '',
     };
     const p = this.props;
+    console.log(data);
     p.saveModal(data);
   }
 

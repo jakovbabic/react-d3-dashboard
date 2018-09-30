@@ -7,11 +7,11 @@ import Paper from '@material-ui/core/Paper';
 import {
   AreaChart,
   BarChart,
-  LineChart,
   PieChart,
 } from 'react-d3-components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Line } from 'react-chartjs-2';
 import {
   GRAPH_TYPE_BAR,
   GRAPH_TYPE_INDICATOR,
@@ -20,6 +20,7 @@ import {
   GRAPH_TYPE_LINE,
   GRAPH_TYPE_AREA,
 } from '../../../constants/dashboard';
+import { white, darkGray } from '../../../constants/colors';
 
 /**
  * @name MainPage
@@ -61,9 +62,9 @@ class GraphView extends Component {
       const img = <img src={require(`assets/images/indicators/${item.image}`)} alt='test' width='50px' height='50px' />;
       return (
         <div>
-          <h3>{ title }</h3>
-          <span>{ subtitle }</span>
-          { img }
+          <h3>{title}</h3>
+          <span>{subtitle}</span>
+          {img}
         </div>
       );
     }
@@ -84,7 +85,7 @@ class GraphView extends Component {
       };
       return (
         <div className='text-align-center'>
-          <h5 className='text-align-left'>{ title }</h5>
+          <h5 className='text-align-left'>{title}</h5>
           <PieChart
             data={data}
             width={400}
@@ -94,7 +95,10 @@ class GraphView extends Component {
             innerRadius={50}
             margin={
               {
-                top: 10, bottom: 10, left: 100, right: 100,
+                top: 10,
+                bottom: 10,
+                left: 100,
+                right: 100,
               }
             }
             tooltipHtml={this.tooltip}
@@ -118,7 +122,7 @@ class GraphView extends Component {
       };
       return (
         <div className='text-align-center'>
-          <h5 className='text-align-left'>{ title }</h5>
+          <h5 className='text-align-left'>{title}</h5>
           <BarChart
             data={data}
             width={400}
@@ -132,7 +136,10 @@ class GraphView extends Component {
             }
             margin={
               {
-                top: 10, bottom: 30, left: 100, right: 0,
+                top: 10,
+                bottom: 30,
+                left: 100,
+                right: 0,
               }
             }
             tooltipHtml={this.tooltip}
@@ -160,7 +167,7 @@ class GraphView extends Component {
       };
       return (
         <div className='text-align-center'>
-          <h5 className='text-align-left'>{ title }</h5>
+          <h5 className='text-align-left'>{title}</h5>
           <BarChart
             groupedBars
             data={grdata}
@@ -169,7 +176,10 @@ class GraphView extends Component {
             height={400}
             margin={
               {
-                top: 10, bottom: 30, left: 100, right: 0,
+                top: 10,
+                bottom: 30,
+                left: 100,
+                right: 0,
               }
             }
             tooltipHtml={this.tooltip}
@@ -179,38 +189,82 @@ class GraphView extends Component {
     }
     if (item.type === GRAPH_TYPE_LINE) {
       const title = item.name;
-      const grdata = item.eeff.map((p) => {
-        return {
-          x: p.name,
-          y: p.values[0].calcValue,
-        };
-      });
-      const data = [{
-        values: grdata,
-      }];
-      const scale = () => {
-        return '#555555';
+      const data = {
+        charData: {
+          labels: [],
+          datasets: [
+            {
+              fill: false,
+              lineTension: 0.1,
+              borderColor: darkGray,
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: darkGray,
+              pointBackgroundColor: white,
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointRadius: 2,
+              pointHoverBackgroundColor: darkGray,
+              pointHoverBorderColor: darkGray,
+              pointHoverBorderWidth: 2,
+              pointHitRadius: 10,
+              data: [],
+            },
+          ],
+        },
+        chartOptions: {
+          scales: {
+            yAxes: [
+              {
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                  labelString: item.epigraph[0].name,
+                },
+                gridLines: {
+                  borderDashOffset: 2,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawOnChartArea: false,
+                },
+                type: 'category',
+                padding: 10,
+              },
+            ],
+          },
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem) => {
+                let label = tooltipItem.xLabel;
+                label += ',';
+                label += tooltipItem.yLabel;
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: false,
+        },
       };
+      item.eeff.forEach((p) => {
+        data.charData.labels.push(p.name);
+        data.charData.datasets[0].data.push(p.values[0].calcValue);
+      });
       return (
         <div className='text-align-center'>
-          <h5 className='text-align-left'>{ title }</h5>
-          <LineChart
-            groupedBars
-            data={data}
-            colorScale={scale}
-            width={400}
-            height={400}
-            yAxis={
-              {
-                label: item.epigraph[0].name,
-              }
-            }
-            margin={
-              {
-                top: 10, bottom: 30, left: 20, right: 0,
-              }
-            }
-          />
+          <h5 className='text-align-left'>{title}</h5>
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -234,7 +288,7 @@ class GraphView extends Component {
       };
       return (
         <div className='text-align-center'>
-          <h5 className='text-align-left'>{ title }</h5>
+          <h5 className='text-align-left'>{title}</h5>
           <AreaChart
             data={grdata}
             colorScale={scale}
@@ -247,7 +301,10 @@ class GraphView extends Component {
             }
             margin={
               {
-                top: 10, bottom: 30, left: 20, right: 0,
+                top: 10,
+                bottom: 30,
+                left: 20,
+                right: 0,
               }
             }
           />
@@ -281,8 +338,8 @@ class GraphView extends Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem>{ p.literals.editGraph }</MenuItem>
-          <MenuItem>{ p.literals.deleteGraph }</MenuItem>
+          <MenuItem>{p.literals.editGraph}</MenuItem>
+          <MenuItem>{p.literals.deleteGraph}</MenuItem>
         </Menu>
         {template}
       </Paper>
