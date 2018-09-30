@@ -37,6 +37,7 @@ export default async function apiFetch(method, url, params) {
   const CONFIG = {
     method,
     headers: new Headers({ ...HEADERS }),
+    credentials: 'include',
   };
 
   let URL = `${API_BASE_URL}/${url.endPoint}`;
@@ -52,11 +53,12 @@ export default async function apiFetch(method, url, params) {
         case 'POST':
         case 'PUT':
         default:
-          CONFIG.body = JSON.stringify(params);
+          CONFIG.body = params;
           break;
       }
     }
   }
+
   const response = await (await fetch(URL, CONFIG)).text();
 
   try {
