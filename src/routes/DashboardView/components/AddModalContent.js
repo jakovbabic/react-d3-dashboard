@@ -72,9 +72,14 @@ class AddModalContent extends Component {
     const val = event.target.value;
     this.setState({ [event.target.name]: val });
     if (val === GRAPH_TYPE_INDICATOR) {
-      this.setState({ width: 3, height: 3 });
+      this.setState({ width: 3, height: 3, eeff: '' });
     } else {
-      this.setState({ width: 4, height: 4, selectedImg: '' });
+      this.setState({
+        width: 4,
+        height: 4,
+        selectedImg: '',
+        eeff: [],
+      });
     }
   };
 
@@ -141,6 +146,11 @@ class AddModalContent extends Component {
     return rlt;
   };
 
+  successSave = () => {
+    const p = this.props;
+    p.addModalClose();
+  }
+
   graphSave = () => {
     const state = this.state;
     let eeff = [];
@@ -181,8 +191,7 @@ class AddModalContent extends Component {
       position_y: '',
     };
     const p = this.props;
-    console.log(data);
-    p.saveModal(data);
+    p.saveModal(data, this.successSave);
   }
 
   render() {
@@ -207,9 +216,11 @@ class AddModalContent extends Component {
         value: item.alias,
       };
     });
-    let checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
+    let checkbox = '';
     if (state.type === GRAPH_TYPE_INDICATOR || ((state.type === GRAPH_TYPE_BAR || state.type === GRAPH_TYPE_LINE) && state.tree.length > 1)) {
       checkbox = <RadioGroup onChange={this.handleChangeEeff} value={state.eeff} options={eeff} />;
+    } else {
+      checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
     }
     return (
       <div className='DashboardView__AddModal'>

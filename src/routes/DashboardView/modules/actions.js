@@ -18,6 +18,7 @@ import {
   FETCH_TABLEOPTIONS_SUCCESS,
   DASHBOARD_CHANGED_SUCCESS,
   MODAL_CANCELLED,
+  ADD_GRAPH_SUCCESS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -101,6 +102,13 @@ export function fetchdashboardsAction(id) {
   };
 }
 
+export function graphAddSuccess(res) {
+  return {
+    type: ADD_GRAPH_SUCCESS,
+    payload: res,
+  };
+}
+
 export function dashboardChangeAction(id) {
   return (dispatch) => {
     return new Promise((resolve) => {
@@ -112,12 +120,14 @@ export function dashboardChangeAction(id) {
   };
 }
 
-export function saveModalAction(data) {
+export function saveModalAction(data, callback) {
   return (dispatch) => {
     dispatch(loadingAction(true));
     return new Promise((resolve) => {
-      saveModal(data).then(() => {
+      saveModal(data).then((res) => {
         dispatch(loadingAction(false));
+        dispatch(graphAddSuccess(res));
+        callback();
         resolve(true);
       });
     });

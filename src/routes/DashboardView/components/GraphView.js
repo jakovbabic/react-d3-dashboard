@@ -235,6 +235,9 @@ class GraphView extends Component {
                 },
                 type: 'category',
                 padding: 10,
+                ticks: {
+                  autoSkip: false,
+                },
               },
             ],
           },

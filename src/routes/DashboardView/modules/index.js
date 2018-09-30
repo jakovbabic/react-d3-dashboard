@@ -8,6 +8,7 @@ import {
   FETCH_TABLEOPTIONS_SUCCESS,
   DASHBOARD_CHANGED_SUCCESS,
   MODAL_CANCELLED,
+  ADD_GRAPH_SUCCESS,
 } from './types';
 
 import { DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
@@ -24,6 +25,12 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       return { ...state, selectedTable: {} };
     case FETCH_DASHBOARD_FAILURE:
       return { ...state, dashboard: {} };
+    case ADD_GRAPH_SUCCESS: {
+      // const dashboard = state.dashboard;
+      // dashboard.graph.push(action.payload);
+      // console.log(dashboard);
+      return { ...state };
+    }
     case FETCH_TYPEOPTIONS_SUCCESS: {
       const data = action.payload.map((item) => {
         return {
