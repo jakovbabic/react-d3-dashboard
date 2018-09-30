@@ -2,7 +2,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import DashboardPageComponents from '../components';
-import { fetchdashboardsAction, searchdashboardsAction } from '../modules/actions';
+import {
+  fetchdashboardsAction,
+  searchdashboardsAction,
+  saveDashboardAction,
+} from '../modules/actions';
 
 function mapStateToProps(state) {
   return {
@@ -15,6 +19,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     loadDashboards: bindActionCreators(fetchdashboardsAction, dispatch),
+    saveDashboard: bindActionCreators(saveDashboardAction, dispatch),
     search: bindActionCreators(searchdashboardsAction, dispatch),
   };
 }

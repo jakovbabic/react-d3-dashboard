@@ -47,12 +47,19 @@ export default {
       public: 'Public',
       search: 'Search',
       applicant: 'Applicant',
+      modal: {
+        name: 'Name',
+        ok: 'OK',
+        cancel: 'Cancel',
+      },
     },
     dashboardview: {
       dashboardLink: 'Dashboard',
       addGraph: 'Create Graph',
       editGraph: 'Edit Graph',
       deleteGraph: 'Delete Graph',
+      saveDashboard: 'Save Dashboard',
+      emptyGraph: 'Add Graph',
       modal: {
         name: 'Name',
         type: 'Type',

@@ -7,7 +7,8 @@ import {
   loadDashboardView,
   loadOptions,
   loadDashboard,
-  saveModal,
+  saveGraph, saveDashboard,
+  // deleteGraph,
 } from '../../../services/DashboardService';
 
 import {
@@ -18,7 +19,8 @@ import {
   FETCH_TABLEOPTIONS_SUCCESS,
   DASHBOARD_CHANGED_SUCCESS,
   MODAL_CANCELLED,
-  ADD_GRAPH_SUCCESS,
+  SAVE_GRAPH_SUCCESS,
+  DELETE_GRAPH_SUCCESS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -88,13 +90,16 @@ export function loadTableOptionsAction() {
   };
 }
 
-export function fetchdashboardsAction(id) {
+export function fetchdashboardsAction(id, callback) {
   return (dispatch) => {
     dispatch(loadingAction(true));
     dispatch(fetchDashboardsInit());
     return new Promise((resolve) => {
       loadDashboardView(id).then((res) => {
         dispatch(fetchDashboardsSuccess(res));
+        if (callback) {
+          callback(res);
+        }
         dispatch(loadingAction(false));
         resolve(true);
       });
@@ -102,9 +107,16 @@ export function fetchdashboardsAction(id) {
   };
 }
 
-export function graphAddSuccess(res) {
+export function graphSaveSuccess(res) {
   return {
-    type: ADD_GRAPH_SUCCESS,
+    type: SAVE_GRAPH_SUCCESS,
+    payload: res,
+  };
+}
+
+export function graphDeleteSuccess(res) {
+  return {
+    type: DELETE_GRAPH_SUCCESS,
     payload: res,
   };
 }
@@ -124,9 +136,9 @@ export function saveModalAction(data, callback) {
   return (dispatch) => {
     dispatch(loadingAction(true));
     return new Promise((resolve) => {
-      saveModal(data).then((res) => {
+      saveGraph(data).then((res) => {
         dispatch(loadingAction(false));
-        dispatch(graphAddSuccess(res));
+        dispatch(graphSaveSuccess(res));
         callback();
         resolve(true);
       });
@@ -134,10 +146,40 @@ export function saveModalAction(data, callback) {
   };
 }
 
+export function deleteGraphAction(data) {
+  return (dispatch) => {
+    // dispatch(loadingAction(true));
+    // return new Promise((resolve) => {
+    //   deleteGraph(data).then(() => {
+    //     dispatch(loadingAction(false));
+    //     dispatch(graphDeleteSuccess(data));
+    //     resolve(true);
+    //   });
+    // });
+    dispatch(graphDeleteSuccess(data));
+  };
+}
+
 export function cancelModalAction() {
   return (dispatch) => {
     dispatch({
       type: MODAL_CANCELLED,
+    });
+  };
+}
+
+
+export function saveDashboardAction(data, callback) {
+  return (dispatch) => {
+    dispatch(loadingAction(true));
+    return new Promise((resolve) => {
+      saveDashboard(data).then((res) => {
+        dispatch(loadingAction(false));
+        if (callback) {
+          callback(res);
+        }
+        resolve(true);
+      });
     });
   };
 }

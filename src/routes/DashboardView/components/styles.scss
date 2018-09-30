@@ -41,10 +41,27 @@
     display: flex;
     &--title, &--option{
       flex-grow: 0.5;
+      &__input{
+        width: 100%;
+      }
     }
   }
+  &--bottom{
+    text-align: right;
+  }
   &--graph{
-    &__item{
+    &--empty{
+      width: 400px;
+      height: 130px;
+      padding: 20px;
+      border: dotted 2px $black;
+      font-size: 40px;
+      display: flex;
+      margin: 100px auto;
+      justify-content: center;
+      align-items: center;
+    }
+    &--item{
       padding: 20px !important;
       position: relative;
       &--setting{

@@ -9,6 +9,8 @@ import {
   dashboardChangeAction,
   cancelModalAction,
   saveModalAction,
+  deleteGraphAction,
+  saveDashboardAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
@@ -29,6 +31,8 @@ function mapDispatchToProps(dispatch) {
     dashboardChange: bindActionCreators(dashboardChangeAction, dispatch),
     cancelModal: bindActionCreators(cancelModalAction, dispatch),
     saveModal: bindActionCreators(saveModalAction, dispatch),
+    deleteGraph: bindActionCreators(deleteGraphAction, dispatch),
+    saveDashboard: bindActionCreators(saveDashboardAction, dispatch),
   };
 }
 

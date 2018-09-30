@@ -62,9 +62,12 @@ class AddModalContent extends Component {
     width: 0,
     height: 0,
     name: '',
+    graphId: 0,
   };
 
   componentDidMount() {
+    const p = this.props;
+    p.onRef(this);
     this.setState({ images: INDICATOR_IMAGES });
   }
 
@@ -86,25 +89,14 @@ class AddModalContent extends Component {
   dashboardChange = (event) => {
     const id = event.target.value;
     const prop = this.props;
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: id });
     prop.dashboardChange(id);
   };
 
   imgClicked = (key) => {
     const state = this.state;
-    const rlt = [];
-    let src = '';
-    state.images.forEach((item, i) => {
-      const p = item;
-      if (i === key) {
-        p.active = 1;
-        src = p.src;
-      } else {
-        p.active = 0;
-      }
-      rlt.push(p);
-    });
-    this.setState({ images: rlt, selectedImg: src });
+    const src = state.images[key].src;
+    this.setState({ selectedImg: src });
   };
 
   treeChange = (value) => {
@@ -149,7 +141,28 @@ class AddModalContent extends Component {
   successSave = () => {
     const p = this.props;
     p.addModalClose();
-  }
+  };
+
+  editGraph = (item) => {
+    let eeff = item.epigraph.map((p) => {
+      return p.alias;
+    });
+    if (item.type === GRAPH_TYPE_INDICATOR) {
+      eeff = eeff.join(',');
+    }
+    const imgArray = item.image ? item.image.match(/ind_([^.]+)/) : null;
+    this.setState({
+      name: item.name,
+      dashboard: `${item.sourceView}`,
+      type: item.type,
+      tree: item.epigraph.map((p) => {
+        return p.alias;
+      }),
+      eeff,
+      graphId: item.graphId,
+      selectedImg: imgArray ? imgArray[1] : '',
+    });
+  };
 
   graphSave = () => {
     const state = this.state;
@@ -177,11 +190,13 @@ class AddModalContent extends Component {
         };
       });
     }
+    const p = this.props;
     const data = {
       type: state.type,
       sourceView: parseInt(state.dashboard, 10),
-      viewId: parseInt(state.dashboard, 10),
+      viewId: p.dashboard.viewId,
       epigraph,
+      graphId: state.graphId,
       image: state.selectedImg,
       eeff,
       width: state.width,
@@ -190,9 +205,8 @@ class AddModalContent extends Component {
       position_x: '',
       position_y: '',
     };
-    const p = this.props;
     p.saveModal(data, this.successSave);
-  }
+  };
 
   render() {
     const p = this.props;
@@ -227,7 +241,7 @@ class AddModalContent extends Component {
         <form>
           <FormControl className='DashboardView__AddModal--formControl'>
             <InputLabel>{ p.literals.modal.name }</InputLabel>
-            <Input onChange={this.changeName} />
+            <Input onChange={this.changeName} value={state.name} />
           </FormControl>
           <FormControl className='DashboardView__AddModal--formControl'>
             <InputLabel>{ p.literals.modal.dashboard }</InputLabel>
@@ -248,7 +262,7 @@ class AddModalContent extends Component {
           {
             <div className={img}>
               { state.images.map((item, i) => {
-                const active = item.active === 1 ? 'active' : '';
+                const active = item.src === state.selectedImg ? 'active' : '';
                 return (
                   <img src={require(`assets/images/indicators/img_ind_${item.src}.png`)} alt='test' onClick={this.imgClicked.bind(this, i)} className={active} width='50px' height='50px' key={i} />
                 );

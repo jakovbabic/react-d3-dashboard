@@ -14,12 +14,37 @@ export function loadDashboardView(id) {
   );
 }
 
-export function saveModal(data) {
+export function saveGraph(data) {
+  if (data.graphId === 0) {
+    return apiFetch(
+      'POST',
+      { endPoint: `views/${data.viewId}/graph` },
+      data,
+    );
+  }
   return apiFetch(
-    'POST',
-    { endPoint: `views/${data.viewId}/graph` },
+    'PUT',
+    { endPoint: `views/${data.viewId}/graph/${data.graphId}` },
     data,
   );
+}
+
+export function saveDashboard(data) {
+  if (!data.viewId || data.viewId === 0) {
+    return apiFetch(
+      'POST',
+      { endPoint: 'views' },
+      data,
+    );
+  }
+  return apiFetch(
+    'PUT',
+    { endPoint: `views/${data.viewId}` },
+    data,
+  );
+}
+
+export function deleteGraph() {
 }
 
 export function loadOptions() {

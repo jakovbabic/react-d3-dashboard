@@ -4,14 +4,9 @@ import 'antd/dist/antd.min.css';
 import IconButton from '@material-ui/core/IconButton';
 import Settings from '@material-ui/icons/Settings';
 import Paper from '@material-ui/core/Paper';
-import {
-  AreaChart,
-  BarChart,
-  PieChart,
-} from 'react-d3-components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar, Pie } from 'react-chartjs-2';
 import {
   GRAPH_TYPE_BAR,
   GRAPH_TYPE_INDICATOR,
@@ -20,7 +15,12 @@ import {
   GRAPH_TYPE_LINE,
   GRAPH_TYPE_AREA,
 } from '../../../constants/dashboard';
-import { white, darkGray } from '../../../constants/colors';
+import {
+  white,
+  darkGray,
+  gray,
+  lightGray,
+} from '../../../constants/colors';
 
 /**
  * @name MainPage
@@ -70,120 +70,197 @@ class GraphView extends Component {
     }
     if (item.type === GRAPH_TYPE_PIE) {
       const title = item.name;
-      const gdata = item.epigraph.map((p, i) => {
-        return {
-          x: p.name,
-          y: item.eeff[0].values[i].calcValue,
-        };
-      });
-      const scale = () => {
-        return '#555555';
-      };
       const data = {
-        label: 'somethingA',
-        values: gdata,
+        charData: {
+          labels: [],
+          datasets: [
+            {
+              data: [],
+              backgroundColor: [
+                darkGray,
+                gray,
+                lightGray,
+              ],
+            },
+          ],
+        },
+        chartOptions: {
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem, t) => {
+                let label = t.labels[tooltipItem.datasetIndex];
+                label += ',';
+                label += t.datasets[0].data[tooltipItem.datasetIndex];
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: false,
+        },
       };
+      item.epigraph.forEach((p, i) => {
+        data.charData.labels.push(p.name);
+        data.charData.datasets[0].data.push(item.eeff[0].values[i].calcValue);
+      });
       return (
         <div className='text-align-center'>
           <h5 className='text-align-left'>{title}</h5>
-          <PieChart
-            data={data}
-            width={400}
-            height={400}
-            colorScale={scale}
-            outerRadius={100}
-            innerRadius={50}
-            margin={
-              {
-                top: 10,
-                bottom: 10,
-                left: 100,
-                right: 100,
-              }
-            }
-            tooltipHtml={this.tooltip}
-          />
+          <Pie data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
     if (item.type === GRAPH_TYPE_BAR) {
       const title = item.name;
-      const grdata = item.eeff.map((p) => {
-        return {
-          x: p.name,
-          y: p.values[0].calcValue,
-        };
-      });
-      const data = [{
-        values: grdata,
-      }];
-      const scale = () => {
-        return '#555555';
+      const data = {
+        charData: {
+          labels: [],
+          datasets: [
+            {
+              fill: false,
+              backgroundColor: darkGray,
+              borderColor: darkGray,
+              borderWidth: 1,
+              hoverBackgroundColor: darkGray,
+              hoverBorderColor: darkGray,
+              data: [],
+            },
+          ],
+        },
+        chartOptions: {
+          scales: {
+            yAxes: [
+              {
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                  labelString: item.epigraph[0].name,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawOnChartArea: false,
+                },
+                type: 'category',
+                padding: 10,
+                ticks: {
+                  autoSkip: false,
+                },
+              },
+            ],
+          },
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem) => {
+                let label = tooltipItem.xLabel;
+                label += ',';
+                label += tooltipItem.yLabel;
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: false,
+        },
       };
+      item.eeff.forEach((p) => {
+        data.charData.labels.push(p.name);
+        data.charData.datasets[0].data.push(p.values[0].calcValue);
+      });
       return (
         <div className='text-align-center'>
           <h5 className='text-align-left'>{title}</h5>
-          <BarChart
-            data={data}
-            width={400}
-            height={400}
-            opacity={70}
-            colorScale={scale}
-            yAxis={
-              {
-                label: item.epigraph[0].name,
-              }
-            }
-            margin={
-              {
-                top: 10,
-                bottom: 30,
-                left: 100,
-                right: 0,
-              }
-            }
-            tooltipHtml={this.tooltip}
-          />
+          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
     if (item.type === GRAPH_TYPE_GROUP_BAR) {
       const title = item.name;
-      const grdata = item.eeff.map((p) => {
+      const data = {
+        charData: {
+          labels: [],
+          datasets: [],
+        },
+        chartOptions: {
+          scales: {
+            yAxes: [
+              {
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawOnChartArea: false,
+                },
+                type: 'category',
+                padding: 10,
+                ticks: {
+                  autoSkip: false,
+                },
+              },
+            ],
+          },
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem) => {
+                let label = tooltipItem.xLabel;
+                label += ',';
+                label += tooltipItem.yLabel;
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: true,
+          position: 'bottom',
+          fullWidth: true,
+          reverse: false,
+        },
+      };
+      const colors = [darkGray, gray, lightGray];
+      item.epigraph.forEach((p, i) => {
         const pi = {
           label: p.name,
-          values: [],
+          data: [],
+          backgroundColor: colors[i % colors.length],
+          borderColor: colors[i % colors.length],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[i % colors.length],
+          hoverBorderColor: colors[i % colors.length],
         };
-        item.epigraph.forEach((val, key) => {
-          pi.values.push({
-            x: val.name,
-            y: p.values[key].calcValue,
-          });
+        item.eeff.forEach((val) => {
+          pi.data.push(val.values[i].calcValue);
+          if (data.charData.labels.indexOf(val.name) === -1) {
+            data.charData.labels.push(val.name);
+          }
         });
-        return pi;
+        data.charData.datasets.push(pi);
       });
-      const scale = () => {
-        return '#555555';
-      };
       return (
         <div className='text-align-center'>
           <h5 className='text-align-left'>{title}</h5>
-          <BarChart
-            groupedBars
-            data={grdata}
-            colorScale={scale}
-            width={400}
-            height={400}
-            margin={
-              {
-                top: 10,
-                bottom: 30,
-                left: 100,
-                right: 0,
-              }
-            }
-            tooltipHtml={this.tooltip}
-          />
+          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -273,44 +350,80 @@ class GraphView extends Component {
     }
     if (item.type === GRAPH_TYPE_AREA) {
       const title = item.name;
-      const grdata = item.eeff.map((p) => {
+      const data = {
+        charData: {
+          labels: [],
+          datasets: [],
+        },
+        chartOptions: {
+          scales: {
+            yAxes: [
+              {
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawOnChartArea: false,
+                },
+                type: 'category',
+                padding: 10,
+                ticks: {
+                  autoSkip: false,
+                },
+              },
+            ],
+          },
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem) => {
+                let label = tooltipItem.xLabel;
+                label += ',';
+                label += tooltipItem.yLabel;
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: true,
+          position: 'bottom',
+          fullWidth: true,
+          reverse: false,
+        },
+      };
+      const colors = [darkGray, gray, lightGray];
+      item.epigraph.forEach((p, i) => {
         const pi = {
           label: p.name,
-          values: [],
+          data: [],
+          fill: true,
+          backgroundColor: colors[i % colors.length],
+          borderColor: colors[i % colors.length],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[i % colors.length],
+          hoverBorderColor: colors[i % colors.length],
         };
-        item.epigraph.forEach((val, key) => {
-          pi.values.push({
-            x: val.name,
-            y: p.values[key].calcValue,
-          });
+        item.eeff.forEach((val) => {
+          pi.data.push(val.values[i].calcValue);
+          if (data.charData.labels.indexOf(val.name) === -1) {
+            data.charData.labels.push(val.name);
+          }
         });
-        return pi;
+        data.charData.datasets.push(pi);
       });
-      const scale = () => {
-        return '#555555';
-      };
       return (
         <div className='text-align-center'>
           <h5 className='text-align-left'>{title}</h5>
-          <AreaChart
-            data={grdata}
-            colorScale={scale}
-            width={400}
-            height={400}
-            yAxis={
-              {
-                label: item.epigraph[0].name,
-              }
-            }
-            margin={
-              {
-                top: 10,
-                bottom: 30,
-                left: 20,
-                right: 0,
-              }
-            }
-          />
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -321,18 +434,30 @@ class GraphView extends Component {
     );
   };
 
+  editGraph = (item) => {
+    const p = this.props;
+    this.setState({ anchorEl: null });
+    p.editGraph(item);
+  };
+
+  deleteGraph = (item) => {
+    const p = this.props;
+    this.setState({ anchorEl: null });
+    p.deleteGraph(item);
+  };
+
   render() {
     const p = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const template = this.makeTemplate(p.item);
     return (
-      <Paper className='DashboardView--graph__item'>
+      <Paper className='DashboardView--graph--item'>
         <IconButton
           aria-haspopup='true'
           onClick={this.handleClick}
           color='inherit'
-          className='DashboardView--graph__item--setting'
+          className='DashboardView--graph--item--setting'
         >
           <Settings />
         </IconButton>
@@ -341,8 +466,8 @@ class GraphView extends Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem>{p.literals.editGraph}</MenuItem>
-          <MenuItem>{p.literals.deleteGraph}</MenuItem>
+          <MenuItem><a onClick={this.editGraph.bind(this, p.item)}>{p.literals.editGraph}</a></MenuItem>
+          <MenuItem><a onClick={this.deleteGraph.bind(this, p.item)}>{p.literals.deleteGraph}</a></MenuItem>
         </Menu>
         {template}
       </Paper>

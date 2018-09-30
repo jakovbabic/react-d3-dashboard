@@ -11,8 +11,14 @@ import TableChart from '@material-ui/icons/TableChart';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 import Navbar from '../../../components/Navbar/container/index';
 import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
 
@@ -28,9 +34,15 @@ import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from '../../../constants/d
 class DashboardPage extends Component {
   static propTypes = {
     loadDashboards: PropTypes.func.isRequired,
+    saveDashboard: PropTypes.func.isRequired,
     dashboards: PropTypes.array.isRequired,
     search: PropTypes.func.isRequired,
     literals: PropTypes.object.isRequired,
+  };
+
+  state = {
+    modalOpen: false,
+    name: '',
   };
 
   componentDidMount() {
@@ -38,12 +50,39 @@ class DashboardPage extends Component {
     loadDashboards();
   }
 
+  addModalClose = () => {
+    this.setState({ modalOpen: false, name: '' });
+  };
+
+  addModalOpen = () => {
+    this.setState({ modalOpen: true });
+  };
+
   search = (e) => {
     const val = e.target.value;
     const { search } = this.props;
     search(val);
     return false;
-  }
+  };
+
+  changeName = (e) => {
+    this.setState({ name: e.target.value });
+  };
+
+  saveSuccess = (res) => {
+    const props = this.props;
+    props.history.push(`dashboardview/${res.viewId}`);
+  };
+
+  dashboardSave = () => {
+    const state = this.state;
+    const data = {
+      name: state.name,
+    };
+    const { saveDashboard } = this.props;
+    saveDashboard(data, this.saveSuccess);
+  };
+
   /**
    * @name setLoadedState
    * Sets loaded state
@@ -53,6 +92,7 @@ class DashboardPage extends Component {
 
   render() {
     const { dashboards, literals } = this.props;
+    const { modalOpen, name } = this.state;
     return (
       <div>
         <Navbar />
@@ -62,7 +102,7 @@ class DashboardPage extends Component {
               { literals.title }
             </h4>
             <div className='Dashboard--top--btns text-align-right'>
-              <Button variant='contained' className='Dashboard--top--btns--btn'>
+              <Button variant='contained' className='Dashboard--top--btns--btn' onClick={this.addModalOpen}>
                 { literals.createDashboard }
                 <Add className='mlr15' />
               </Button>
@@ -107,6 +147,31 @@ class DashboardPage extends Component {
             })
             }
           </List>
+          <Dialog
+            open={modalOpen}
+            onClose={this.addModalClose}
+            className='Dashboard--AddModal'
+          >
+            <DialogTitle>
+              { literals.createDashboard }
+            </DialogTitle>
+            <DialogContent>
+              <div>
+                <form>
+                  <FormControl className='Dashboard--AddModal--formControl'>
+                    <InputLabel>{ literals.modal.name }</InputLabel>
+                    <Input onChange={this.changeName} value={name} />
+                  </FormControl>
+                  <Button onClick={this.dashboardSave}>
+                    { literals.modal.ok }
+                  </Button>
+                  <Button onClick={this.addModalClose}>
+                    { literals.modal.cancel }
+                  </Button>
+                </form>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     );
