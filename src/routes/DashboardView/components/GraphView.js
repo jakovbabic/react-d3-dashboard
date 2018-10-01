@@ -141,6 +141,9 @@ class GraphView extends Component {
                   display: true,
                   labelString: item.epigraph[0].name,
                 },
+                ticks: {
+                  beginAtZero: true,
+                },
               },
             ],
             xAxes: [
@@ -200,6 +203,9 @@ class GraphView extends Component {
                 type: 'linear',
                 scaleLabel: {
                   display: true,
+                },
+                ticks: {
+                  beginAtZero: true,
                 },
               },
             ],
@@ -303,6 +309,9 @@ class GraphView extends Component {
                 gridLines: {
                   borderDashOffset: 2,
                 },
+                ticks: {
+                  beginAtZero: true,
+                },
               },
             ],
             xAxes: [
@@ -362,6 +371,9 @@ class GraphView extends Component {
                 type: 'linear',
                 scaleLabel: {
                   display: true,
+                },
+                ticks: {
+                  beginAtZero: true,
                 },
               },
             ],

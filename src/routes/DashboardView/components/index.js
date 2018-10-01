@@ -180,7 +180,7 @@ class DashboardView extends Component {
           </div>
           <div className='DashboardView--graph'>
             {
-              (!dashboard.graph || dashboard.graph.length === 0) && <div className='DashboardView--graph--empty'>{ literals.emptyGraph }</div>
+              (!dashboard.graph || dashboard.graph.length === 0) && <div className='DashboardView--graph--empty' onClick={this.addModalOpen}>{ literals.emptyGraph }</div>
             }
             <Grid container spacing={24}>
               { dashboard.graph && dashboard.graph.map((item, i) => {

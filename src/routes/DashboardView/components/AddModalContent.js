@@ -144,7 +144,7 @@ class AddModalContent extends Component {
   };
 
   editGraph = (item) => {
-    let eeff = item.epigraph.map((p) => {
+    let eeff = item.eeff.map((p) => {
       return p.alias;
     });
     if (item.type === GRAPH_TYPE_INDICATOR) {
