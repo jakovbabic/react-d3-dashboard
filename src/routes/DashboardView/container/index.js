@@ -11,6 +11,7 @@ import {
   saveModalAction,
   deleteGraphAction,
   saveDashboardAction,
+  changeLayoutAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
@@ -33,6 +34,7 @@ function mapDispatchToProps(dispatch) {
     saveModal: bindActionCreators(saveModalAction, dispatch),
     deleteGraph: bindActionCreators(deleteGraphAction, dispatch),
     saveDashboard: bindActionCreators(saveDashboardAction, dispatch),
+    changeLayout: bindActionCreators(changeLayoutAction, dispatch),
   };
 }
 

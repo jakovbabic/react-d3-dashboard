@@ -4,28 +4,33 @@ import IconButton from '@material-ui/core/IconButton';
 import './styles.css';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import RGL, { WidthProvider } from 'react-grid-layout';
+import 'react-grid-layout/css/styles.css';
 import AddModalContent from './AddModalContent';
 import GraphView from './GraphView';
 import Navbar from '../../../components/Navbar/container/index';
+import { DASHBOARD_URL } from '../../../constants/urls';
 
 
 /**
- * @name MainPage
+ * @name DashboardViewPage
  *
- *
- * @param {Object}   user
+ * @param {Object}   dashboard
+ * @param {Object}   selectedTable
+ * @param {Object}   tableOptions
+ * @param {Object}   typeOptions
  * @param {Object}   literals
  *
  * @returns {JSX}
  */
 
+const ReactGridLayout = WidthProvider(RGL);
 class DashboardView extends Component {
   static propTypes = {
     loadDashboards: PropTypes.func.isRequired,
@@ -36,6 +41,7 @@ class DashboardView extends Component {
     dashboardChange: PropTypes.func.isRequired,
     deleteGraph: PropTypes.func.isRequired,
     saveDashboard: PropTypes.func.isRequired,
+    changeLayout: PropTypes.func.isRequired,
     dashboard: PropTypes.object.isRequired,
     selectedTable: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
@@ -66,23 +72,39 @@ class DashboardView extends Component {
     loadTableOptions();
   }
 
+  /**
+   * @name setName
+   * Sets dashboard name state
+   *
+   * @param {Obj} Dashboard
+   */
   setName = (res) => {
     this.setState({ name: res.name });
   };
 
+  /**
+   * @name handleClick
+   * Sets Option menu state
+   *
+   * @param {Obj} event
+   */
   handleClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  /**
+   * @name handleClose
+   * Close Option menu
+   *
+   */
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
 
   /**
-   * @name setLoadedState
-   * Sets loaded state
+   * @name addModalOpen
+   * Open graph modal
    *
-   * @param {Boolean} loaded
    */
 
   addModalOpen = () => {
@@ -90,6 +112,12 @@ class DashboardView extends Component {
     this.setState({ modalOpen: true, modalTitle: literals.addGraph });
   };
 
+  /**
+   * @name editGraph
+   * Open graph modal and set form data
+   *
+   * @param {Obj} selected graph data
+   */
   editGraph = (item) => {
     const { literals } = this.props;
     this.setState({ modalOpen: true, modalTitle: literals.editGraph });
@@ -100,6 +128,11 @@ class DashboardView extends Component {
     }, 0);
   };
 
+  /**
+   * @name addModalClose
+   * Close graph modal
+   *
+   */
   addModalClose = () => {
     this.setState({ modalOpen: false });
     const {
@@ -108,6 +141,11 @@ class DashboardView extends Component {
     cancelModal();
   };
 
+  /**
+   * @name dashboardSave
+   * Save the dashboard
+   *
+   */
   dashboardSave = () => {
     const state = this.state;
     const { saveDashboard, dashboard } = this.props;
@@ -116,6 +154,11 @@ class DashboardView extends Component {
     saveDashboard(data);
   };
 
+  /**
+   * @name changeName
+   * Sets name state when change dashboard name
+   * @param {Obj} input event
+   */
   changeName = (e) => {
     this.setState({ name: e.target.value });
     return true;
@@ -131,6 +174,7 @@ class DashboardView extends Component {
       dashboardChange,
       saveModal,
       deleteGraph,
+      changeLayout,
     } = this.props;
     const {
       anchorEl,
@@ -173,7 +217,7 @@ class DashboardView extends Component {
                 open={open}
                 onClose={this.handleClose}
               >
-                <MenuItem><a href='/dashboard'>{ literals.dashboardLink }</a></MenuItem>
+                <MenuItem><a href={`/${DASHBOARD_URL}`}>{ literals.dashboardLink }</a></MenuItem>
                 <MenuItem><a onClick={this.addModalOpen}>{ literals.addGraph }</a></MenuItem>
               </Menu>
             </div>
@@ -182,20 +226,30 @@ class DashboardView extends Component {
             {
               (!dashboard.graph || dashboard.graph.length === 0) && <div className='DashboardView--graph--empty' onClick={this.addModalOpen}>{ literals.emptyGraph }</div>
             }
-            <Grid container spacing={24}>
-              { dashboard.graph && dashboard.graph.map((item, i) => {
-                let width = 3;
-                if (item.type !== 1) {
-                  width = 4;
-                }
+            <ReactGridLayout cols={12} rowHeight={130} width={1200} onLayoutChange={changeLayout}>
+              { dashboard.graph && dashboard.graph.map((item) => {
+                // let width = 3;
+                // if (item.type !== GRAPH_TYPE_INDICATOR) {
+                //   width = 4;
+                // }
                 return (
-                  <Grid item xs={width} key={i}>
+                  <div
+                    key={item.graphId}
+                    data-grid={
+                      {
+                        x: parseInt(item.position_x, 10),
+                        y: parseInt(item.position_y, 10),
+                        w: item.width,
+                        h: item.height,
+                      }
+                    }
+                  >
                     <GraphView item={item} literals={literals} editGraph={this.editGraph} deleteGraph={deleteGraph} />
-                  </Grid>
+                  </div>
                 );
               })
               }
-            </Grid>
+            </ReactGridLayout>
           </div>
           <div className='DashboardView--bottom'>
             <Button variant='contained' onClick={this.dashboardSave}>

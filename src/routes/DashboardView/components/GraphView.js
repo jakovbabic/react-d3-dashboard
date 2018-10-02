@@ -23,10 +23,10 @@ import {
 } from '../../../constants/colors';
 
 /**
- * @name MainPage
+ * @name GraphView Component
  *
- *
- * @param {Object}   user
+ * @param {Func}   editGraph
+ * @param {Func}   deleteGraph
  * @param {Object}   literals
  *
  * @returns {JSX}
@@ -40,10 +40,19 @@ class GraphView extends Component {
   componentDidMount() {
   }
 
+  /**
+   * @name handleClick
+   * Open the option menu ( edit, delete )
+   * @param {Object}   option menu button click event
+   */
   handleClick = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  /**
+   * @name handleClose
+   * Closes the option menu ( edit, delete )
+   */
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
@@ -55,6 +64,11 @@ class GraphView extends Component {
     return `x: ${x}, y: ${y}`;
   };
 
+  /**
+   * @name makeTemplate
+   * Makes the graph from data
+   * @param {Obj} graph data
+   */
   makeTemplate = (item) => {
     if (item.type === GRAPH_TYPE_INDICATOR) {
       const title = item.eeff[0].values[0].calcValue;
@@ -446,12 +460,22 @@ class GraphView extends Component {
     );
   };
 
+  /**
+   * @name editGraph
+   * Edit the graph
+   * @param {Obj} graph to edit
+   */
   editGraph = (item) => {
     const p = this.props;
     this.setState({ anchorEl: null });
     p.editGraph(item);
   };
 
+  /**
+   * @name deleteGraph
+   * Delete the graph
+   * @param {Obj} graph to delete
+   */
   deleteGraph = (item) => {
     const p = this.props;
     this.setState({ anchorEl: null });

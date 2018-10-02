@@ -17,11 +17,16 @@ import {
 } from '../../../constants/dashboard';
 
 /**
- * @name MainPage
+ * @name AddModalContent Component
  *
- *
- * @param {Object}   user
+ * @param {Object}   dashboard
  * @param {Object}   literals
+ * @param {Object}   selectedTable
+ * @param {Object}   typeOptions
+ * @param {Object}   tableOptions
+ * @param {Func}   addModalClose
+ * @param {Func}   saveModal
+ * @param {Func}   dashboardChange
  *
  * @returns {JSX}
  */
@@ -71,6 +76,11 @@ class AddModalContent extends Component {
     this.setState({ images: INDICATOR_IMAGES });
   }
 
+  /**
+   * @name typeChange
+   * Set state when change the graph type
+   * @param {Object}  event
+   */
   typeChange = (event) => {
     const val = event.target.value;
     this.setState({ [event.target.name]: val });
@@ -86,6 +96,11 @@ class AddModalContent extends Component {
     }
   };
 
+  /**
+   * @name dashboardChange
+   * Set state when change the Dashboard
+   * @param {Object}  event
+   */
   dashboardChange = (event) => {
     const id = event.target.value;
     const prop = this.props;
@@ -93,29 +108,59 @@ class AddModalContent extends Component {
     prop.dashboardChange(id);
   };
 
+  /**
+   * @name imgClicked
+   * Set state when change the Image
+   * @param {Integer} Image Index
+   */
   imgClicked = (key) => {
     const state = this.state;
     const src = state.images[key].src;
     this.setState({ selectedImg: src });
   };
 
+  /**
+   * @name treeChange
+   * Set state when change the Tree Select
+   * @param {Array} Value of Tree select
+   */
   treeChange = (value) => {
     this.setState({ tree: value });
   };
 
+  /**
+   * @name handleChangeEeff
+   * Set state when change the Eeff
+   * @param {Obj} event
+   */
   handleChangeEeff = (e) => {
     const value = e.target.value;
     this.setState({ eeff: value });
   };
 
+  /**
+   * @name handleChangeEeffCheckbox
+   * Set state when change the Eeff
+   * @param {Array} Value of Eeff
+   */
   handleChangeEeffCheckbox = (checkedVal) => {
     this.setState({ eeff: checkedVal });
   };
 
+  /**
+   * @name handleChangeEeff
+   * Set state when change the name
+   * @param {Obj} event
+   */
   changeName = (e) => {
     this.setState({ name: e.target.value });
   };
 
+  /**
+   * @name makeTree
+   * Make Tree data from graph data
+   * @param {Obj} graph data
+   */
   makeTree = (data) => {
     if (!data) {
       return [];
@@ -138,11 +183,21 @@ class AddModalContent extends Component {
     return rlt;
   };
 
+  /**
+   * @name successSave
+   * Callback after save the graph
+   *
+   */
   successSave = () => {
     const p = this.props;
     p.addModalClose();
   };
 
+  /**
+   * @name editGraph
+   * Sets the form data when edit graph
+   * @param {Obj} graph to edit
+   */
   editGraph = (item) => {
     let eeff = item.eeff.map((p) => {
       return p.alias;
@@ -164,6 +219,11 @@ class AddModalContent extends Component {
     });
   };
 
+  /**
+   * @name graphSave
+   * Saves the graph with state data
+   *
+   */
   graphSave = () => {
     const state = this.state;
     let eeff = [];
@@ -220,7 +280,7 @@ class AddModalContent extends Component {
       className: 'DashboardView__AddModal--formControl',
       multiple: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
       showCheckedStrategy: SHOW_PARENT,
-      searchPlaceholder: 'Please select',
+      searchPlaceholder: p.literals.treePlaceholder,
     };
     const RadioGroup = Radio.Group;
     const CheckboxGroup = Checkbox.Group;

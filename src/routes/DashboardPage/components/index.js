@@ -21,12 +21,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Navbar from '../../../components/Navbar/container/index';
 import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
+import { DASHBOARD_VIEW_URL, TABLE_VIEW_URL } from '../../../constants/urls';
 
 /**
- * @name MainPage
+ * @name DashboardPage
  *
  *
- * @param {Object}   user
+ * @param {Object}   dashboards
+ * @param {Object}   totalDashboards
  * @param {Object}   literals
  *
  * @returns {JSX}
@@ -49,14 +51,29 @@ class DashboardPage extends Component {
     const { loadDashboards } = this.props;
     loadDashboards();
   }
+  /**
+   * @name addModalClose
+   * Close the modal for creating graph
+   *
+   */
 
   addModalClose = () => {
     this.setState({ modalOpen: false, name: '' });
   };
 
+  /**
+   * @name addModalOpen
+   * Open the modal for creating graph
+   *
+   */
   addModalOpen = () => {
     this.setState({ modalOpen: true });
   };
+  /**
+   * @name search
+   * Search the dashboards with keyword
+   * @param {Object}   event of input
+   */
 
   search = (e) => {
     const val = e.target.value;
@@ -64,16 +81,31 @@ class DashboardPage extends Component {
     search(val);
     return false;
   };
+  /**
+   * @name changeName
+   * Change name state when input dashboard name
+   * @param {Object}   event of input
+   */
 
   changeName = (e) => {
     this.setState({ name: e.target.value });
   };
 
+  /**
+   * @name saveSuccess
+   * Callback after saved the dashboard.
+   * @param {Object} created dashboard
+   */
+
   saveSuccess = (res) => {
     const props = this.props;
-    props.history.push(`dashboardview/${res.viewId}`);
+    props.history.push(`${DASHBOARD_VIEW_URL}/${res.viewId}`);
   };
 
+  /**
+   * @name dashboardSave
+   * Save the dashboard.
+   */
   dashboardSave = () => {
     const state = this.state;
     const data = {
@@ -82,13 +114,6 @@ class DashboardPage extends Component {
     const { saveDashboard } = this.props;
     saveDashboard(data, this.saveSuccess);
   };
-
-  /**
-   * @name setLoadedState
-   * Sets loaded state
-   *
-   * @param {Boolean} loaded
-   */
 
   render() {
     const { dashboards, literals } = this.props;
@@ -118,10 +143,10 @@ class DashboardPage extends Component {
               let url = '';
               if (item.type === DASHBOARD_TYPE_TABLE) {
                 icon = <TableChart />;
-                url = 'table';
+                url = TABLE_VIEW_URL;
               } else if (item.type === DASHBOARD_TYPE_GRAPH) {
                 icon = <PieChart />;
-                url = 'dashboardview';
+                url = DASHBOARD_VIEW_URL;
               }
               return (
                 <ListItem className='Dashboard--list__list-item' key={i}>

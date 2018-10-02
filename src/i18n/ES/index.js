@@ -64,6 +64,7 @@ export default {
         name: 'Name',
         type: 'Type',
         dashboard: 'Dashboard',
+        treePlaceholder: 'Please Select',
         ok: 'OK',
         cancel: 'Cancel',
         epigraph: 'Epigraph',

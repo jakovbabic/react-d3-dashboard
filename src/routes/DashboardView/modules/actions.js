@@ -21,6 +21,7 @@ import {
   MODAL_CANCELLED,
   SAVE_GRAPH_SUCCESS,
   DELETE_GRAPH_SUCCESS,
+  LAYOUT_CHANGED_SUCCESS,
 } from './types';
 
 export function fetchDashboardsInit() {
@@ -180,6 +181,15 @@ export function saveDashboardAction(data, callback) {
         }
         resolve(true);
       });
+    });
+  };
+}
+
+export function changeLayoutAction(data) {
+  return (dispatch) => {
+    dispatch({
+      type: LAYOUT_CHANGED_SUCCESS,
+      payload: data,
     });
   };
 }

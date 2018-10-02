@@ -5,13 +5,14 @@ import Table from './Table';
 import DashboardView from './DashboardView';
 import Login from './Login';
 import Signup from './Signup';
+import { DASHBOARD_VIEW_URL, TABLE_VIEW_URL, DASHBOARD_URL } from '../constants/urls';
 
 export const BASEROUTE = '/';
 
 export const ROUTE_MAIN_PAGE = '/main';
-export const ROUTE_DASHBOARD_PAGE = '/dashboard';
-export const ROUTE_DASHBOARD_VIEW = '/dashboardview/:id';
-export const ROUTE_TABLE = '/table/:id';
+export const ROUTE_DASHBOARD_PAGE = `/${DASHBOARD_URL}`;
+export const ROUTE_DASHBOARD_VIEW = `/${DASHBOARD_VIEW_URL}/:id`;
+export const ROUTE_TABLE = `/${TABLE_VIEW_URL}/:id`;
 export const ROUTE_LOGIN = '/login';
 export const ROUTE_LOGOUT = '/logout';
 export const ROUTE_SIGNUP = '/signup';
