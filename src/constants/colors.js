@@ -18,7 +18,15 @@ export const flatOrange = '#FC4236';
 export const red = '#FF2400';
 export const purple = '#B71B46';
 export const green = '#2ECC71';
-
+export const colorGroup = [
+  '#c00000',
+  '#ffc000',
+  '#92d050',
+  '#7030a0',
+  '#7f7f7f',
+  '#00b0f0',
+  '#f79646',
+];
 export default {
   primary,
   secondary,
@@ -36,4 +44,5 @@ export default {
   red,
   purple,
   green,
+  colorGroup,
 };

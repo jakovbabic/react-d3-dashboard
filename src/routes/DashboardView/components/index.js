@@ -164,6 +164,15 @@ class DashboardView extends Component {
     return true;
   };
 
+  deleteCallback = () => {
+    this.setState({ modalOpen: false });
+  };
+
+  deleteGraph = (item) => {
+    const { deleteGraph } = this.props;
+    deleteGraph(item, this.deleteCallback);
+  };
+
   render() {
     const {
       dashboard,
@@ -173,7 +182,6 @@ class DashboardView extends Component {
       selectedTable,
       dashboardChange,
       saveModal,
-      deleteGraph,
       changeLayout,
     } = this.props;
     const {
@@ -244,7 +252,7 @@ class DashboardView extends Component {
                       }
                     }
                   >
-                    <GraphView item={item} literals={literals} editGraph={this.editGraph} deleteGraph={deleteGraph} />
+                    <GraphView item={item} literals={literals} editGraph={this.editGraph} deleteGraph={this.deleteGraph} />
                   </div>
                 );
               })

@@ -32,9 +32,8 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       const dash = dashboard;
       const graph = action.payload;
       graph.position_x = 0;
-      graph.position_y = 0;
+      graph.position_y = 100;
       dash.graph.push(action.payload);
-      console.log(dash);
       return { ...state, dashboard: dash };
     }
     case DELETE_GRAPH_SUCCESS: {

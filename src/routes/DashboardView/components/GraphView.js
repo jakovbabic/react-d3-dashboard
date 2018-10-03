@@ -17,9 +17,7 @@ import {
 } from '../../../constants/dashboard';
 import {
   white,
-  darkGray,
-  gray,
-  lightGray,
+  colorGroup,
 } from '../../../constants/colors';
 
 /**
@@ -90,11 +88,7 @@ class GraphView extends Component {
           datasets: [
             {
               data: [],
-              backgroundColor: [
-                darkGray,
-                gray,
-                lightGray,
-              ],
+              backgroundColor: colorGroup,
             },
           ],
         },
@@ -137,11 +131,11 @@ class GraphView extends Component {
           datasets: [
             {
               fill: false,
-              backgroundColor: darkGray,
-              borderColor: darkGray,
+              backgroundColor: colorGroup[0],
+              borderColor: colorGroup[0],
               borderWidth: 1,
-              hoverBackgroundColor: darkGray,
-              hoverBorderColor: darkGray,
+              hoverBackgroundColor: colorGroup[0],
+              hoverBorderColor: colorGroup[0],
               data: [],
             },
           ],
@@ -258,7 +252,7 @@ class GraphView extends Component {
           reverse: false,
         },
       };
-      const colors = [darkGray, gray, lightGray];
+      const colors = colorGroup;
       item.epigraph.forEach((p, i) => {
         const pi = {
           label: p.name,
@@ -293,18 +287,18 @@ class GraphView extends Component {
             {
               fill: false,
               lineTension: 0.1,
-              borderColor: darkGray,
+              borderColor: colorGroup[0],
               borderCapStyle: 'butt',
               borderDash: [],
               borderDashOffset: 0.0,
               borderJoinStyle: 'miter',
-              pointBorderColor: darkGray,
+              pointBorderColor: colorGroup[0],
               pointBackgroundColor: white,
               pointBorderWidth: 1,
               pointHoverRadius: 5,
               pointRadius: 2,
-              pointHoverBackgroundColor: darkGray,
-              pointHoverBorderColor: darkGray,
+              pointHoverBackgroundColor: colorGroup[0],
+              pointHoverBorderColor: colorGroup[0],
               pointHoverBorderWidth: 2,
               pointHitRadius: 10,
               data: [],
@@ -426,7 +420,7 @@ class GraphView extends Component {
           reverse: false,
         },
       };
-      const colors = [darkGray, gray, lightGray];
+      const colors = colorGroup;
       item.epigraph.forEach((p, i) => {
         const pi = {
           label: p.name,
@@ -476,9 +470,9 @@ class GraphView extends Component {
    * Delete the graph
    * @param {Obj} graph to delete
    */
+
   deleteGraph = (item) => {
     const p = this.props;
-    this.setState({ anchorEl: null });
     p.deleteGraph(item);
   };
 

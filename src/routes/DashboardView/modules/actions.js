@@ -147,7 +147,7 @@ export function saveModalAction(data, callback) {
   };
 }
 
-export function deleteGraphAction(data) {
+export function deleteGraphAction(data, callback) {
   return (dispatch) => {
     // dispatch(loadingAction(true));
     // return new Promise((resolve) => {
@@ -158,6 +158,9 @@ export function deleteGraphAction(data) {
     //   });
     // });
     dispatch(graphDeleteSuccess(data));
+    if (callback) {
+      callback();
+    }
   };
 }
 
