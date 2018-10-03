@@ -110,6 +110,7 @@ class DashboardPage extends Component {
     const state = this.state;
     const data = {
       name: state.name,
+      type: DASHBOARD_TYPE_GRAPH,
     };
     const { saveDashboard } = this.props;
     saveDashboard(data, this.saveSuccess);

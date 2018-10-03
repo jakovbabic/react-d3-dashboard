@@ -277,7 +277,7 @@ class AddModalContent extends Component {
     const state = this.state;
     const fields = ['dashboard', 'type', 'eeff', 'tree'];
     for (let i = 0; i < fields.length; i += 1) {
-      if (state[fields[i]] === '' || state[fields[i]] === []) {
+      if (state[fields[i]] === '' || state[fields[i]].length === 0) {
         return true;
       }
     }

@@ -28,10 +28,11 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
     case FETCH_DASHBOARD_FAILURE:
       return { ...state, dashboard: {} };
     case SAVE_GRAPH_SUCCESS: {
-      // const dashboard = state.dashboard;
-      // dashboard.graph.push(action.payload);
-      // console.log(dashboard);
-      return { ...state };
+      const dashboard = state.dashboard;
+      const dash = dashboard;
+      dash.graph.push(action.payload);
+      console.log(dash);
+      return { ...state, dashboard: dash };
     }
     case DELETE_GRAPH_SUCCESS: {
       const dashboard = state.dashboard;
