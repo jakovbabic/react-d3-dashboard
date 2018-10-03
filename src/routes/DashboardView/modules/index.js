@@ -30,6 +30,9 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
     case SAVE_GRAPH_SUCCESS: {
       const dashboard = state.dashboard;
       const dash = dashboard;
+      const graph = action.payload;
+      graph.position_x = 0;
+      graph.position_y = 0;
       dash.graph.push(action.payload);
       console.log(dash);
       return { ...state, dashboard: dash };
