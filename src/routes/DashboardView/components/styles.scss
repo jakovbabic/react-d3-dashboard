@@ -1,6 +1,7 @@
 @import '../../../styles/_colors.scss';
 .DashboardView {
   padding: 20px;
+  padding-bottom: 80px;
   background: $bgLightGray;
   &__Dialog{
     z-index: 0 !important;
@@ -48,6 +49,12 @@
   }
   &--bottom{
     text-align: right;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background: $white;
+    padding: 20px;
+    margin-left: -20px;
   }
   &--graph{
     &--empty{
@@ -65,7 +72,13 @@
       padding: 20px !important;
       position: relative;
       height: 100%;
-      overflow: auto;
+      canvas{
+        max-height: 100% !important;
+      }
+      //overflow: auto;
+      &__container{
+        height: 90%;
+      }
       &--setting{
         position: absolute !important;
         right: 0px;

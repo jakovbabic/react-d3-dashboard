@@ -45,6 +45,6 @@ describe('<DashboardPage/>', () => {
       search={searchdashboardsAction}
       loadDashboards={fetchdashboardsAction}
     />);
-    expect(component.find('h4').text()).toEqual('Todas tus vistas');
+    expect(component.find('.Dashboard--list__list-item').length).toEqual(3);
   });
 });

@@ -55,7 +55,7 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       const dash = dashboard;
       action.payload.forEach((item) => {
         for (let i = 0; i < dash.graph.length; i += 1) {
-          if (dash.graph[i].graphId === item.i) {
+          if (parseInt(dash.graph[i].graphId, 10) === parseInt(item.i, 10)) {
             dash.graph[i].width = item.w;
             dash.graph[i].height = item.h;
             dash.graph[i].position_x = item.x;

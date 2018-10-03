@@ -187,7 +187,7 @@ class DashboardPage extends Component {
                     <InputLabel>{ literals.modal.name }</InputLabel>
                     <Input onChange={this.changeName} value={name} />
                   </FormControl>
-                  <Button onClick={this.dashboardSave}>
+                  <Button onClick={this.dashboardSave} disabled={name === ''}>
                     { literals.modal.ok }
                   </Button>
                   <Button onClick={this.addModalClose}>

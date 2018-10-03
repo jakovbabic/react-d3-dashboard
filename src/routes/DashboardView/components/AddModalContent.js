@@ -268,6 +268,25 @@ class AddModalContent extends Component {
     p.saveModal(data, this.successSave);
   };
 
+  /**
+   * @name isValid
+   * Check if all form data is not empty.
+   *
+   */
+  isValid = () => {
+    const state = this.state;
+    const fields = ['dashboard', 'type', 'eeff', 'tree'];
+    for (let i = 0; i < fields.length; i += 1) {
+      if (state[fields[i]] === '' || state[fields[i]] === []) {
+        return true;
+      }
+    }
+    if (state.type === GRAPH_TYPE_INDICATOR && state.selectedImg === '') {
+      return true;
+    }
+    return false;
+  };
+
   render() {
     const p = this.props;
     const state = this.state;
@@ -296,6 +315,7 @@ class AddModalContent extends Component {
     } else {
       checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
     }
+    const disabled = this.isValid();
     return (
       <div className='DashboardView__AddModal'>
         <form>
@@ -330,7 +350,7 @@ class AddModalContent extends Component {
               }
             </div>
           }
-          <Button onClick={this.graphSave}>
+          <Button onClick={this.graphSave} disabled={disabled}>
             { p.literals.modal.ok }
           </Button>
           <Button onClick={p.addModalClose}>

@@ -123,7 +123,7 @@ class GraphView extends Component {
         data.charData.datasets[0].data.push(item.eeff[0].values[i].calcValue);
       });
       return (
-        <div className='text-align-center'>
+        <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Pie data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
@@ -197,7 +197,7 @@ class GraphView extends Component {
         data.charData.datasets[0].data.push(p.values[0].calcValue);
       });
       return (
-        <div className='text-align-center'>
+        <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
@@ -278,7 +278,7 @@ class GraphView extends Component {
         data.charData.datasets.push(pi);
       });
       return (
-        <div className='text-align-center'>
+        <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
@@ -365,7 +365,7 @@ class GraphView extends Component {
         data.charData.datasets[0].data.push(p.values[0].calcValue);
       });
       return (
-        <div className='text-align-center'>
+        <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
@@ -447,7 +447,7 @@ class GraphView extends Component {
         data.charData.datasets.push(pi);
       });
       return (
-        <div className='text-align-center'>
+        <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
