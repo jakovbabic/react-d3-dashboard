@@ -1,4 +1,4 @@
-import { API_BASE_URL, HEADERS } from 'constants/apiConf';
+import { API_BASE_URL, HEADERS } from '../constants/apiConf';
 
 /**
  * @name transformGetParams
