@@ -22,8 +22,8 @@ import {
  * @param {Object}   dashboard
  * @param {Object}   literals
  * @param {Object}   selectedTable
- * @param {Object}   typeOptions
- * @param {Object}   tableOptions
+ * @param {Array}   typeOptions
+ * @param {Array}   tableOptions
  * @param {Func}   addModalClose
  * @param {Func}   saveModal
  * @param {Func}   dashboardChange
@@ -344,7 +344,7 @@ class AddModalContent extends Component {
               { state.images.map((item, i) => {
                 const active = item.src === state.selectedImg ? 'active' : '';
                 return (
-                  <img src={require(`assets/images/indicators/img_ind_${item.src}.png`)} alt='test' onClick={this.imgClicked.bind(this, i)} className={active} width='50px' height='50px' key={i} />
+                  <img src={require(`../../../assets/images/indicators/img_ind_${item.src}.png`)} alt='test' onClick={this.imgClicked.bind(this, i)} className={active} width='50px' height='50px' key={i} />
                 );
               })
               }
