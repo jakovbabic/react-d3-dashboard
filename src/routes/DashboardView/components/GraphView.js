@@ -295,8 +295,8 @@ class GraphView extends Component {
               pointBorderColor: colorGroup[0],
               pointBackgroundColor: white,
               pointBorderWidth: 1,
-              pointHoverRadius: 5,
-              pointRadius: 2,
+              pointHoverRadius: 6,
+              pointRadius: 4,
               pointHoverBackgroundColor: colorGroup[0],
               pointHoverBorderColor: colorGroup[0],
               pointHoverBorderWidth: 2,
@@ -431,6 +431,16 @@ class GraphView extends Component {
           borderWidth: 1,
           hoverBackgroundColor: colors[i % colors.length],
           hoverBorderColor: colors[i % colors.length],
+          lineTension: 0.1,
+          pointBorderColor: colors[i % colors.length],
+          pointBackgroundColor: white,
+          pointBorderWidth: 1,
+          pointHoverRadius: 6,
+          pointRadius: 4,
+          pointHoverBackgroundColor: colors[i % colors.length],
+          pointHoverBorderColor: colors[i % colors.length],
+          pointHoverBorderWidth: 2,
+          pointHitRadius: 10,
         };
         item.eeff.forEach((val) => {
           pi.data.push(val.values[i].calcValue);

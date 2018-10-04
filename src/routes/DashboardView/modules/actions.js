@@ -1,7 +1,7 @@
 // import apiFetch from 'utils/apiFetch';
 import {
   loadingAction,
-} from 'store/globalState/global';
+} from '../../../store/globalState/global';
 
 import {
   loadDashboardView,
