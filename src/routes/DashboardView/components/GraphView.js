@@ -14,6 +14,7 @@ import {
   GRAPH_TYPE_GROUP_BAR,
   GRAPH_TYPE_LINE,
   GRAPH_TYPE_AREA,
+  GRAPH_TYPE_GROUP_LINE,
 } from '../../../constants/dashboard';
 import {
   white,
@@ -109,7 +110,10 @@ class GraphView extends Component {
           },
         },
         legendOpts: {
-          display: false,
+          display: true,
+          position: 'bottom',
+          fullWidth: true,
+          reverse: false,
         },
       };
       item.epigraph.forEach((p, i) => {
@@ -275,6 +279,88 @@ class GraphView extends Component {
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
           <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+        </div>
+      );
+    }
+    if (item.type === GRAPH_TYPE_GROUP_LINE) {
+      const title = item.name;
+      const data = {
+        charData: {
+          labels: [],
+          datasets: [],
+        },
+        chartOptions: {
+          scales: {
+            yAxes: [
+              {
+                type: 'linear',
+                scaleLabel: {
+                  display: true,
+                },
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+            xAxes: [
+              {
+                gridLines: {
+                  drawOnChartArea: false,
+                },
+                type: 'category',
+                padding: 10,
+                ticks: {
+                  autoSkip: false,
+                },
+              },
+            ],
+          },
+          tooltips: {
+            displayColors: false,
+            callbacks: {
+              title: () => {
+                return '';
+              },
+              label: (tooltipItem) => {
+                let label = tooltipItem.xLabel;
+                label += ',';
+                label += tooltipItem.yLabel;
+                return label;
+              },
+            },
+          },
+        },
+        legendOpts: {
+          display: true,
+          position: 'bottom',
+          fullWidth: true,
+          reverse: false,
+        },
+      };
+      const colors = colorGroup;
+      item.epigraph.forEach((p, i) => {
+        const pi = {
+          fill: false,
+          label: p.name,
+          data: [],
+          backgroundColor: colors[i % colors.length],
+          borderColor: colors[i % colors.length],
+          borderWidth: 1,
+          hoverBackgroundColor: colors[i % colors.length],
+          hoverBorderColor: colors[i % colors.length],
+        };
+        item.eeff.forEach((val) => {
+          pi.data.push(val.values[i].calcValue);
+          if (data.charData.labels.indexOf(val.name) === -1) {
+            data.charData.labels.push(val.name);
+          }
+        });
+        data.charData.datasets.push(pi);
+      });
+      return (
+        <div className='DashboardView--graph--item__container'>
+          <h5 className='text-align-left'>{title}</h5>
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }

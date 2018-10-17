@@ -6,6 +6,7 @@ export const GRAPH_TYPE_BAR = 3;
 export const GRAPH_TYPE_LINE = 4;
 export const GRAPH_TYPE_AREA = 5;
 export const GRAPH_TYPE_GROUP_BAR = 6;
+export const GRAPH_TYPE_GROUP_LINE = 7;
 export const INDICATOR_IMAGES = [
   {
     src: '0001',

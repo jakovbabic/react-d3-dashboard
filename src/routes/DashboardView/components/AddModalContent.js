@@ -171,6 +171,7 @@ class AddModalContent extends Component {
         rlt.push({
           title: p.name,
           value: p.alias,
+          disabled: p.type.itemType === 'empty',
           children: this.makeTree(p.items),
         });
       } else {
