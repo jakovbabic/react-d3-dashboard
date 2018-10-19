@@ -123,7 +123,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Pie data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Pie id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -197,7 +197,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -278,7 +278,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -360,7 +360,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -447,7 +447,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -539,7 +539,7 @@ class GraphView extends Component {
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -572,6 +572,12 @@ class GraphView extends Component {
     p.deleteGraph(item);
   };
 
+  downloadGraph = (item, e) => {
+    let image = document.getElementById(item.graphId).toDataURL();
+    image = image.replace('image/png', 'image/octet-stream');
+    e.target.href = image;
+  };
+
   render() {
     const p = this.props;
     const { anchorEl } = this.state;
@@ -594,6 +600,7 @@ class GraphView extends Component {
         >
           <MenuItem><a onClick={this.editGraph.bind(this, p.item)}>{p.literals.editGraph}</a></MenuItem>
           <MenuItem><a onClick={this.deleteGraph.bind(this, p.item)}>{p.literals.deleteGraph}</a></MenuItem>
+          <MenuItem><a onClick={this.downloadGraph.bind(this, p.item)} download='graph.png'>{p.literals.downloadGraph}</a></MenuItem>
         </Menu>
         {template}
       </Paper>

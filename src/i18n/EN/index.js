@@ -58,6 +58,7 @@ export default {
       addGraph: 'Create Graph',
       editGraph: 'Edit Graph',
       deleteGraph: 'Delete Graph',
+      downloadGraph: 'Download Graph',
       saveDashboard: 'Save Dashboard',
       emptyGraph: 'Add Graph',
       modal: {

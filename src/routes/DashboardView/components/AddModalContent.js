@@ -298,7 +298,7 @@ class AddModalContent extends Component {
       value: state.tree,
       onChange: this.treeChange,
       className: 'DashboardView__AddModal--formControl',
-      multiple: state.type !== GRAPH_TYPE_INDICATOR && state.type !== GRAPH_TYPE_PIE,
+      multiple: state.type !== GRAPH_TYPE_INDICATOR,
       showCheckedStrategy: SHOW_PARENT,
       searchPlaceholder: p.literals.treePlaceholder,
     };
@@ -311,7 +311,7 @@ class AddModalContent extends Component {
       };
     });
     let checkbox = '';
-    if (state.type === GRAPH_TYPE_INDICATOR || ((state.type === GRAPH_TYPE_BAR || state.type === GRAPH_TYPE_LINE) && state.tree.length > 1)) {
+    if (state.type === GRAPH_TYPE_INDICATOR || ((state.type === GRAPH_TYPE_BAR || state.type === GRAPH_TYPE_PIE || state.type === GRAPH_TYPE_LINE) && state.tree.length > 1)) {
       checkbox = <RadioGroup onChange={this.handleChangeEeff} value={state.eeff} options={eeff} />;
     } else {
       checkbox = <CheckboxGroup onChange={this.handleChangeEeffCheckbox} value={state.eeff} options={eeff} />;
