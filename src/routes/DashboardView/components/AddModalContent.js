@@ -209,7 +209,7 @@ class AddModalContent extends Component {
     const imgArray = item.image ? item.image.match(/ind_([^.]+)/) : null;
     this.setState({
       name: item.name,
-      dashboard: `${item.sourceView}`,
+      dashboard: item.sourceView,
       type: item.type,
       tree: item.epigraph.map((p) => {
         return p.alias;

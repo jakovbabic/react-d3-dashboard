@@ -76,6 +76,9 @@ body{
         height: 100%;
         canvas{
           max-height: 100% !important;
+          &[id]{
+            display: none !important;
+          }
         }
         &__container{
           height: 90%;

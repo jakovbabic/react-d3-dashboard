@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Line, Bar, Pie } from 'react-chartjs-2';
+import 'chartjs-plugin-datalabels';
 import {
   GRAPH_TYPE_BAR,
   GRAPH_TYPE_INDICATOR,
@@ -88,6 +89,9 @@ class GraphView extends Component {
           labels: [],
           datasets: [
             {
+              datalabels: {
+                display: false,
+              },
               data: [],
               backgroundColor: colorGroup,
             },
@@ -120,10 +124,21 @@ class GraphView extends Component {
         data.charData.labels.push(p.name);
         data.charData.datasets[0].data.push(item.eeff[0].values[i].calcValue);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets[0].datalabels = {
+        display: true,
+        backgroundColor: 'black',
+        color: 'white',
+        offset: 10,
+        font: {
+          size: '12',
+        },
+      };
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Pie id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Pie data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Pie id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -135,6 +150,9 @@ class GraphView extends Component {
           datasets: [
             {
               fill: false,
+              datalabels: {
+                display: false,
+              },
               backgroundColor: colorGroup[0],
               borderColor: colorGroup[0],
               borderWidth: 1,
@@ -194,10 +212,21 @@ class GraphView extends Component {
         data.charData.labels.push(p.name);
         data.charData.datasets[0].data.push(p.values[0].calcValue);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets[0].datalabels = {
+        display: true,
+        backgroundColor: 'black',
+        color: 'white',
+        offset: 10,
+        font: {
+          size: '12',
+        },
+      };
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Bar id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -261,6 +290,9 @@ class GraphView extends Component {
         const pi = {
           label: p.name,
           data: [],
+          datalabels: {
+            display: false,
+          },
           backgroundColor: colors[i % colors.length],
           borderColor: colors[i % colors.length],
           borderWidth: 1,
@@ -275,10 +307,23 @@ class GraphView extends Component {
         });
         data.charData.datasets.push(pi);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets.forEach((e) => {
+        e.datalabels = {
+          display: true,
+          backgroundColor: 'black',
+          color: 'white',
+          offset: 10,
+          font: {
+            size: '12',
+          },
+        };
+      });
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Bar id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Bar id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -343,6 +388,9 @@ class GraphView extends Component {
           fill: false,
           label: p.name,
           data: [],
+          datalabels: {
+            display: false,
+          },
           backgroundColor: colors[i % colors.length],
           borderColor: colors[i % colors.length],
           borderWidth: 1,
@@ -357,10 +405,23 @@ class GraphView extends Component {
         });
         data.charData.datasets.push(pi);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets.forEach((e) => {
+        e.datalabels = {
+          display: true,
+          backgroundColor: 'black',
+          color: 'white',
+          offset: 10,
+          font: {
+            size: '12',
+          },
+        };
+      });
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -372,6 +433,9 @@ class GraphView extends Component {
           datasets: [
             {
               fill: false,
+              datalabels: {
+                display: false,
+              },
               lineTension: 0.1,
               borderColor: colorGroup[0],
               borderCapStyle: 'butt',
@@ -444,10 +508,21 @@ class GraphView extends Component {
         data.charData.labels.push(p.name);
         data.charData.datasets[0].data.push(p.values[0].calcValue);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets[0].datalabels = {
+        display: true,
+        backgroundColor: 'black',
+        color: 'white',
+        offset: 10,
+        font: {
+          size: '12',
+        },
+      };
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -512,6 +587,9 @@ class GraphView extends Component {
           label: p.name,
           data: [],
           fill: true,
+          datalabels: {
+            display: false,
+          },
           backgroundColor: colors[i % colors.length],
           borderColor: colors[i % colors.length],
           borderWidth: 1,
@@ -536,10 +614,23 @@ class GraphView extends Component {
         });
         data.charData.datasets.push(pi);
       });
+      const hiddenData = JSON.parse(JSON.stringify(data));
+      hiddenData.charData.datasets.forEach((e) => {
+        e.datalabels = {
+          display: true,
+          backgroundColor: 'black',
+          color: 'white',
+          offset: 10,
+          font: {
+            size: '12',
+          },
+        };
+      });
       return (
         <div className='DashboardView--graph--item__container'>
           <h5 className='text-align-left'>{title}</h5>
-          <Line id={item.graphId} data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line data={data.charData} options={data.chartOptions} legend={data.legendOpts} />
+          <Line id={item.graphId} data={hiddenData.charData} options={data.chartOptions} legend={data.legendOpts} />
         </div>
       );
     }
@@ -573,7 +664,14 @@ class GraphView extends Component {
   };
 
   downloadGraph = (item, e) => {
-    let image = document.getElementById(item.graphId).toDataURL();
+    const canvas = document.getElementById(item.graphId);
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, w, h);
+    let image = canvas.toDataURL();
     image = image.replace('image/png', 'image/octet-stream');
     e.target.href = image;
   };
@@ -600,7 +698,9 @@ class GraphView extends Component {
         >
           <MenuItem><a onClick={this.editGraph.bind(this, p.item)}>{p.literals.editGraph}</a></MenuItem>
           <MenuItem><a onClick={this.deleteGraph.bind(this, p.item)}>{p.literals.deleteGraph}</a></MenuItem>
-          <MenuItem><a onClick={this.downloadGraph.bind(this, p.item)} download='graph.png'>{p.literals.downloadGraph}</a></MenuItem>
+          {
+            p.item.type !== GRAPH_TYPE_INDICATOR && <MenuItem><a onClick={this.downloadGraph.bind(this, p.item)} download='graph.png'>{p.literals.downloadGraph}</a></MenuItem>
+          }
         </Menu>
         {template}
       </Paper>
