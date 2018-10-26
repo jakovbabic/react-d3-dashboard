@@ -20,7 +20,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Navbar from '../../../components/Navbar/container/index';
-import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE } from '../../../constants/dashboard';
+import { DASHBOARD_TYPE_GRAPH, DASHBOARD_TYPE_TABLE, DASHBOARD_TITLE } from '../../../constants/dashboard';
 import { DASHBOARD_VIEW_URL, TABLE_VIEW_URL } from '../../../constants/urls';
 
 /**
@@ -121,7 +121,7 @@ class DashboardPage extends Component {
     const { modalOpen, name } = this.state;
     return (
       <div>
-        <Navbar />
+        <Navbar title={DASHBOARD_TITLE} />
         <div className='Dashboard'>
           <div className='Dashboard--top'>
             <h4 className='Dashboard--top--title text-align-left'>

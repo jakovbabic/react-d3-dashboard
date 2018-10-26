@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Home from '@material-ui/icons/Home';
+import Storage from '@material-ui/icons/Storage';
 import FileCopy from '@material-ui/icons/FileCopy';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -19,6 +20,7 @@ class Navbar extends React.Component {
 
   static propTypes = {
     literals: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
   };
 
   handleClick = (event) => {
@@ -32,14 +34,39 @@ class Navbar extends React.Component {
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const { literals } = this.props;
+    const { literals, title } = this.props;
     return (
       <div>
         <AppBar position='static' className='Navbar' color='default'>
-          <Toolbar>
-            <Typography variant='title' className='grow text-align-left'>
-              { literals.logo }
+          <Toolbar className='Navbar--top'>
+            <Typography variant='title' className='grow text-align-left Navbar--top--title'>
+              <span className='Navbar--top--title--main'>{ literals.logo }</span>
+              <span className='Navbar--top--title--sub'>{ title }</span>
             </Typography>
+            <div className='Navbar--top--right'>
+              <IconButton
+                aria-haspopup='true'
+                onClick={this.handleClick}
+                color='inherit'
+              >
+                <AccountCircle />
+                <span>Federico Ramirez Cuenca</span>
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorEl}
+                open={open}
+                onClose={this.handleClose}
+              >
+                <MenuItem>{ literals.profile }</MenuItem>
+                <MenuItem>{ literals.logout }</MenuItem>
+              </Menu>
+            </div>
+          </Toolbar>
+          <Toolbar className='Navbar--bottom'>
+            <span className='Navbar--bottom--left'>
+              <Storage className='mlr15' />
+            </span>
             <Button color='inherit'>
               <Home className='mlr15' />
               { literals.first }
@@ -52,24 +79,6 @@ class Navbar extends React.Component {
               <Home className='mlr15' />
               { literals.third }
             </Button>
-            <div>
-              <IconButton
-                aria-haspopup='true'
-                onClick={this.handleClick}
-                color='inherit'
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id='menu-appbar'
-                anchorEl={anchorEl}
-                open={open}
-                onClose={this.handleClose}
-              >
-                <MenuItem>{ literals.profile }</MenuItem>
-                <MenuItem>{ literals.logout }</MenuItem>
-              </Menu>
-            </div>
           </Toolbar>
         </AppBar>
       </div>
