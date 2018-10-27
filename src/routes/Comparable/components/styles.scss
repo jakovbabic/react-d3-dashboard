@@ -22,27 +22,27 @@ body{
           float: right !important;
         }
       }
-      &--ImageContainer{
-        border: solid 1px $lightGray;
-        margin-bottom: 20px;
-        .hidden{
-          display: none;
-        }
-        img{
-          border: solid 1px $lightGray;
-          padding: 10px;
-          margin: 10px;
-          &.active{
-            border: solid 1px $black;
-            box-shadow: 0px 0px 3px 4px rgba(0,0,0,0.4);
+      &--clients{
+        ul{
+          list-style: none;
+          padding: 0px;
+          li{
+            border-bottom: solid 1px $gray;
+            padding: 8px 20px;
+            .ant-checkbox{
+              margin-right: 20px;
+            }
           }
         }
       }
       button{
         float: right;
-        margin-right: 20px;
+        margin-left: 20px;
         background-color: $black;
         color: $white;
+      }
+      p{
+        cursor: pointer;
       }
     }
     &__logo {

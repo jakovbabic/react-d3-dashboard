@@ -25,20 +25,18 @@ import Navbar from '../../../components/Navbar/container/index';
 
 class Comparable extends Component {
   static propTypes = {
-    loadDashboards: PropTypes.func.isRequired,
     loadTypeOptions: PropTypes.func.isRequired,
-    loadTableOptions: PropTypes.func.isRequired,
-    saveModal: PropTypes.func.isRequired,
-    cancelModal: PropTypes.func.isRequired,
-    dashboardChange: PropTypes.func.isRequired,
-    deleteGraph: PropTypes.func.isRequired,
-    saveDashboard: PropTypes.func.isRequired,
-    dashboard: PropTypes.object.isRequired,
-    selectedTable: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    loadCountryOptions: PropTypes.func.isRequired,
+    loadCountryGroupOptions: PropTypes.func.isRequired,
+    loadSegmentOptions: PropTypes.func.isRequired,
+    loadSectorOptions: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
     literals: PropTypes.object.isRequired,
     typeOptions: PropTypes.array.isRequired,
-    tableOptions: PropTypes.array.isRequired,
+    countryOptions: PropTypes.array.isRequired,
+    countryGroupOptions: PropTypes.array.isRequired,
+    segmentOptions: PropTypes.array.isRequired,
+    sectorOptions: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -46,20 +44,22 @@ class Comparable extends Component {
     this.state = {
       modalTitle: '',
       modalOpen: false,
-      name: '',
     };
   }
 
   componentDidMount() {
     const {
       loadTypeOptions,
-      loadDashboards,
-      match,
-      loadTableOptions,
+      loadCountryOptions,
+      loadCountryGroupOptions,
+      loadSegmentOptions,
+      loadSectorOptions,
     } = this.props;
-    loadDashboards(match.params.id, this.setName);
     loadTypeOptions();
-    loadTableOptions();
+    loadCountryOptions();
+    loadCountryGroupOptions();
+    loadSegmentOptions();
+    loadSectorOptions();
   }
 
   /**
@@ -68,34 +68,10 @@ class Comparable extends Component {
    *
    * @param {Obj} Dashboard
    */
-  setName = (res) => {
-    this.setState({ name: res.name });
-  };
-  /**
-   * @name addModalOpen
-   * Open graph modal
-   *
-   */
 
   addModalOpen = () => {
     const { literals } = this.props;
     this.setState({ modalOpen: true, modalTitle: literals.modalTitle });
-  };
-
-  /**
-   * @name editGraph
-   * Open graph modal and set form data
-   *
-   * @param {Obj} selected graph data
-   */
-  editGraph = (item) => {
-    const { literals } = this.props;
-    this.setState({ modalOpen: true, modalTitle: literals.editGraph });
-    const p = this.props;
-    p.dashboardChange(item.sourceView);
-    setTimeout(() => {
-      this.childModal.editGraph(item);
-    }, 0);
   };
 
   /**
@@ -105,10 +81,6 @@ class Comparable extends Component {
    */
   addModalClose = () => {
     this.setState({ modalOpen: false });
-    const {
-      cancelModal,
-    } = this.props;
-    cancelModal();
   };
 
   /**
@@ -117,11 +89,6 @@ class Comparable extends Component {
    *
    */
   dashboardSave = () => {
-    const state = this.state;
-    const { saveDashboard, dashboard } = this.props;
-    const data = dashboard;
-    data.name = state.name;
-    saveDashboard(data);
   };
 
   /**
@@ -129,29 +96,19 @@ class Comparable extends Component {
    * Sets name state when change dashboard name
    * @param {Obj} input event
    */
-  changeName = (e) => {
-    this.setState({ name: e.target.value });
-    return true;
-  };
 
-  deleteCallback = () => {
-    this.setState({ modalOpen: false });
-  };
-
-  deleteGraph = (item) => {
-    const { deleteGraph } = this.props;
-    deleteGraph(item, this.deleteCallback);
+  deleteGraph = () => {
   };
 
   render() {
     const {
-      dashboard,
       literals,
       typeOptions,
-      tableOptions,
-      selectedTable,
-      dashboardChange,
-      saveModal,
+      countryOptions,
+      countryGroupOptions,
+      segmentOptions,
+      sectorOptions,
+      search,
     } = this.props;
     const {
       modalOpen,
@@ -170,12 +127,22 @@ class Comparable extends Component {
               { modalTitle }
             </DialogTitle>
             <DialogContent>
-              <AddModalContent onRef={(ref) => { this.childModal = ref; }} dashboard={dashboard} addModalClose={this.addModalClose} saveModal={saveModal} literals={literals} selectedTable={selectedTable} typeOptions={typeOptions} tableOptions={tableOptions} dashboardChange={dashboardChange} />
+              <AddModalContent
+                onRef={(ref) => { this.childModal = ref; }}
+                addModalClose={this.addModalClose}
+                literals={literals}
+                typeOptions={typeOptions}
+                countryOptions={countryOptions}
+                countryGroupOptions={countryGroupOptions}
+                segmentOptions={segmentOptions}
+                sectorOptions={sectorOptions}
+                search={search}
+              />
             </DialogContent>
           </Dialog>
-          <h3>
+          <h4>
             {literals.title}
-          </h3>
+          </h4>
           <div className='ClientsView--content'>
             <div className='ClientsView--content--empty' onClick={this.addModalOpen}>
               <h5 className='text-center'>

@@ -9,6 +9,7 @@ export default {
   },
   dashboard: {},
   dashboardView: {},
+  comparableView: {},
   login: {
     error: '',
   },

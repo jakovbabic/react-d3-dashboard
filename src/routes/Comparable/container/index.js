@@ -3,38 +3,33 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import ComparableComponents from '../components';
 import {
-  fetchdashboardsAction,
   loadTypeOptionsAction,
-  loadTableOptionsAction,
-  dashboardChangeAction,
-  cancelModalAction,
-  saveModalAction,
-  deleteGraphAction,
-  saveDashboardAction,
-  changeLayoutAction,
+  loadCountryOptionsAction,
+  loadCountryGroupOptionsAction,
+  loadSegmentOptionsAction,
+  loadSectorOptionsAction,
+  searchClientsAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
   return {
-    dashboard: state.dashboardView.dashboard || {},
-    selectedTable: state.dashboardView.selectedTable || {},
     literals: state.i18n.literals.comparable || {},
-    typeOptions: state.dashboardView.typeOptions || [],
-    tableOptions: state.dashboardView.tableOptions || [],
+    typeOptions: state.comparableView.typeOptions || [],
+    segmentOptions: state.comparableView.segmentOptions || [],
+    sectorOptions: state.comparableView.sectorOptions || [],
+    countryOptions: state.comparableView.countryOptions || [],
+    countryGroupOptions: state.comparableView.countryGroupOptions || [],
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadDashboards: bindActionCreators(fetchdashboardsAction, dispatch),
     loadTypeOptions: bindActionCreators(loadTypeOptionsAction, dispatch),
-    loadTableOptions: bindActionCreators(loadTableOptionsAction, dispatch),
-    dashboardChange: bindActionCreators(dashboardChangeAction, dispatch),
-    cancelModal: bindActionCreators(cancelModalAction, dispatch),
-    saveModal: bindActionCreators(saveModalAction, dispatch),
-    deleteGraph: bindActionCreators(deleteGraphAction, dispatch),
-    saveDashboard: bindActionCreators(saveDashboardAction, dispatch),
-    changeLayout: bindActionCreators(changeLayoutAction, dispatch),
+    loadCountryOptions: bindActionCreators(loadCountryOptionsAction, dispatch),
+    loadCountryGroupOptions: bindActionCreators(loadCountryGroupOptionsAction, dispatch),
+    loadSegmentOptions: bindActionCreators(loadSegmentOptionsAction, dispatch),
+    loadSectorOptions: bindActionCreators(loadSectorOptionsAction, dispatch),
+    search: bindActionCreators(searchClientsAction, dispatch),
   };
 }
 

@@ -1,198 +1,97 @@
 // import apiFetch from 'utils/apiFetch';
-import {
-  loadingAction,
-} from '../../../store/globalState/global';
+// import {
+//   loadingAction,
+// } from '../../../store/globalState/global';
 
 import {
-  loadDashboardView,
-  loadOptions,
-  loadDashboard,
-  saveGraph, saveDashboard,
-  // deleteGraph,
-} from '../../../services/DashboardService';
+  loadSectorOptions,
+  loadSegmentOptions,
+  loadTypeOptions,
+  loadCountryGroupOptions,
+  loadCountryOptions,
+  searchClients,
+} from '../../../services/ComparableService';
 
 import {
-  FETCH_DASHBOARD_INIT,
-  FETCH_DASHBOARD_SUCCESS,
-  FETCH_DASHBOARD_FAILURE,
   FETCH_TYPEOPTIONS_SUCCESS,
-  FETCH_TABLEOPTIONS_SUCCESS,
-  DASHBOARD_CHANGED_SUCCESS,
-  MODAL_CANCELLED,
-  SAVE_GRAPH_SUCCESS,
-  DELETE_GRAPH_SUCCESS,
-  LAYOUT_CHANGED_SUCCESS,
+  FETCH_SECTOROPTIONS_SUCCESS,
+  FETCH_SEGMENTOPTIONS_SUCCESS,
+  FETCH_COUNTRYOPTIONS_SUCCESS,
+  FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
 } from './types';
-
-export function fetchDashboardsInit() {
-  return {
-    type: FETCH_DASHBOARD_INIT,
-  };
-}
-
-export function fetchDashboardsSuccess(res) {
-  return {
-    type: FETCH_DASHBOARD_SUCCESS,
-    payload: res,
-  };
-}
-
-export function fetchDashboardsFailed(error) {
-  return {
-    type: FETCH_DASHBOARD_FAILURE,
-    payload: error,
-  };
-}
-
-export function loadTypeOptionsSuccess(res) {
-  return {
-    type: FETCH_TYPEOPTIONS_SUCCESS,
-    payload: res,
-  };
-}
-
-export function loadTableOptionsSuccess(res) {
-  return {
-    type: FETCH_TABLEOPTIONS_SUCCESS,
-    payload: res,
-  };
-}
-
-export function dashboardChangeSuccess(res) {
-  return {
-    type: DASHBOARD_CHANGED_SUCCESS,
-    payload: res,
-  };
-}
 
 export function loadTypeOptionsAction() {
   return (dispatch) => {
-    dispatch(loadingAction(true));
     return new Promise((resolve) => {
-      loadOptions().then((res) => {
-        dispatch(loadTypeOptionsSuccess(res));
-        dispatch(loadingAction(false));
+      loadTypeOptions().then((res) => {
+        dispatch({
+          type: FETCH_TYPEOPTIONS_SUCCESS,
+          payload: res,
+        });
         resolve(true);
       });
     });
   };
 }
-
-export function loadTableOptionsAction() {
+export function loadSectorOptionsAction() {
   return (dispatch) => {
-    dispatch(loadingAction(true));
     return new Promise((resolve) => {
-      loadDashboard().then((res) => {
-        dispatch(loadTableOptionsSuccess(res));
-        dispatch(loadingAction(false));
+      loadSectorOptions().then((res) => {
+        dispatch({
+          type: FETCH_SECTOROPTIONS_SUCCESS,
+          payload: res,
+        });
         resolve(true);
       });
     });
   };
 }
-
-export function fetchdashboardsAction(id, callback) {
+export function loadCountryOptionsAction() {
   return (dispatch) => {
-    dispatch(loadingAction(true));
-    dispatch(fetchDashboardsInit());
     return new Promise((resolve) => {
-      loadDashboardView(id).then((res) => {
-        dispatch(fetchDashboardsSuccess(res));
-        if (callback) {
-          callback(res);
-        }
-        dispatch(loadingAction(false));
+      loadCountryOptions().then((res) => {
+        dispatch({
+          type: FETCH_COUNTRYOPTIONS_SUCCESS,
+          payload: res,
+        });
         resolve(true);
       });
     });
   };
 }
-
-export function graphSaveSuccess(res) {
-  return {
-    type: SAVE_GRAPH_SUCCESS,
-    payload: res,
-  };
-}
-
-export function graphDeleteSuccess(res) {
-  return {
-    type: DELETE_GRAPH_SUCCESS,
-    payload: res,
-  };
-}
-
-export function dashboardChangeAction(id) {
+export function loadCountryGroupOptionsAction() {
   return (dispatch) => {
     return new Promise((resolve) => {
-      loadDashboardView(id).then((res) => {
-        dispatch(dashboardChangeSuccess(res));
+      loadCountryGroupOptions().then((res) => {
+        dispatch({
+          type: FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
+          payload: res,
+        });
         resolve(true);
       });
     });
   };
 }
-
-export function saveModalAction(data, callback) {
+export function loadSegmentOptionsAction() {
   return (dispatch) => {
-    dispatch(loadingAction(true));
     return new Promise((resolve) => {
-      saveGraph(data).then((res) => {
-        dispatch(loadingAction(false));
-        dispatch(graphSaveSuccess(res));
-        callback();
+      loadSegmentOptions().then((res) => {
+        dispatch({
+          type: FETCH_SEGMENTOPTIONS_SUCCESS,
+          payload: res,
+        });
         resolve(true);
       });
     });
   };
 }
-
-export function deleteGraphAction(data, callback) {
-  return (dispatch) => {
-    // dispatch(loadingAction(true));
-    // return new Promise((resolve) => {
-    //   deleteGraph(data).then(() => {
-    //     dispatch(loadingAction(false));
-    //     dispatch(graphDeleteSuccess(data));
-    //     resolve(true);
-    //   });
-    // });
-    dispatch(graphDeleteSuccess(data));
-    if (callback) {
-      callback();
-    }
-  };
-}
-
-export function cancelModalAction() {
-  return (dispatch) => {
-    dispatch({
-      type: MODAL_CANCELLED,
-    });
-  };
-}
-
-
-export function saveDashboardAction(data, callback) {
-  return (dispatch) => {
-    dispatch(loadingAction(true));
+export function searchClientsAction(data, callback) {
+  return () => {
     return new Promise((resolve) => {
-      saveDashboard(data).then((res) => {
-        dispatch(loadingAction(false));
-        if (callback) {
-          callback(res);
-        }
+      searchClients(data).then((res) => {
+        callback(res);
         resolve(true);
       });
-    });
-  };
-}
-
-export function changeLayoutAction(data) {
-  return (dispatch) => {
-    dispatch({
-      type: LAYOUT_CHANGED_SUCCESS,
-      payload: data,
     });
   };
 }
