@@ -11,6 +11,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import {
+  COMPARABLE_URL,
+} from '../../../constants/urls';
 import '../styles.css';
 
 class Navbar extends React.Component {
@@ -79,6 +82,12 @@ class Navbar extends React.Component {
               <Home className='mlr15' />
               { literals.third }
             </Button>
+            <a href={`/${COMPARABLE_URL}`}>
+              <Button color='inherit'>
+                <Home className='mlr15' />
+                { literals.forth }
+              </Button>
+            </a>
           </Toolbar>
         </AppBar>
       </div>

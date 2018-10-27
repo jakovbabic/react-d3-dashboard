@@ -1,0 +1,119 @@
+@import '../../../styles/_colors.scss';
+body{
+  background: $bgLightGray !important;
+  .ClientsView {
+    padding: 20px;
+    padding-bottom: 80px;
+    background: $bgLightGray;
+    &__Dialog{
+      z-index: 0 !important;
+      & > div:nth-child(2){
+        width: 50%;
+      }
+    }
+    &__AddModal{
+      &--formControl{
+        width: 100%;
+        margin-bottom: 10px !important;
+        &.small{
+          width: 45%;
+        }
+        &.float-right{
+          float: right !important;
+        }
+      }
+      &--ImageContainer{
+        border: solid 1px $lightGray;
+        margin-bottom: 20px;
+        .hidden{
+          display: none;
+        }
+        img{
+          border: solid 1px $lightGray;
+          padding: 10px;
+          margin: 10px;
+          &.active{
+            border: solid 1px $black;
+            box-shadow: 0px 0px 3px 4px rgba(0,0,0,0.4);
+          }
+        }
+      }
+      button{
+        float: right;
+        margin-right: 20px;
+        background-color: $black;
+        color: $white;
+      }
+    }
+    &__logo {
+      width: 40rem;
+      margin: 10% auto 0;
+    }
+    &--top{
+      display: flex;
+      &--title, &--option{
+        flex-grow: 0.5;
+        &__input{
+          width: 100%;
+        }
+      }
+    }
+    &--bottom{
+      text-align: right;
+      position: fixed;
+      bottom: 0px;
+      width: 100%;
+      background: $white;
+      padding: 20px;
+      margin-left: -20px;
+      button{
+        background-color: $black;
+        color: $white;
+      }
+    }
+    &--content{
+      background-color: $white;
+      border: solid 1px $gray;
+      padding: 50px 20px;
+      &--empty{
+        &--content{
+          width: 200px;
+          height: 100px;
+          padding: 20px;
+          border: dotted 2px $gray;
+          font-size: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+      &--item{
+        padding: 20px !important;
+        position: relative;
+        height: 100%;
+        canvas{
+          max-height: 100% !important;
+          &[id]{
+            display: none !important;
+          }
+        }
+        &__container{
+          height: 90%;
+        }
+        &--setting{
+          position: absolute !important;
+          right: 0px;
+          top: 0px;
+        }
+        img{
+          position: absolute !important;
+          right: 30px;
+          bottom: 20px;
+        }
+      }
+    }
+  }
+}
+
+
