@@ -10,11 +10,230 @@ export function loadSegmentOptions() {
     resolve(data);
   });
 }
-
-export function searchClients() {
+export function saveClients() {
   // return apiFetch(
   //   'GET',
-  //   { endPoint: 'aqua/eeff/client/segments' },
+  //   { endPoint: `/aqua/eeff/comparable/select?clients=${JSON.stringify(param)}` },
+  // );
+  const data = [
+    {
+      id: 1,
+      name: 'Client 001',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Client 002',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: 'Client 003',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: 'Client 004',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: 'Client 005',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 6,
+      name: 'Client 006',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: 'Client 007',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+    {
+      id: 8,
+      name: 'Client 008',
+      eeff: [
+        {
+          alias: 'EEFF01',
+          name: 'EEFF 01',
+        },
+        {
+          alias: 'EEFF02',
+          name: 'EEFF 02',
+        },
+        {
+          alias: 'EEFF03',
+          name: 'EEFF 03',
+        },
+        {
+          alias: 'EEFF04',
+          name: 'EEFF 04',
+        },
+        {
+          alias: 'EEFF05',
+          name: 'EEFF 05',
+        },
+      ],
+    },
+  ];
+  return new Promise((resolve) => {
+    resolve(data);
+  });
+}
+export function searchClients() {
+  // return apiFetch(
+  //   'POST',
+  //   { endPoint: 'aqua/eeff/client/search' },
+  //    params,
   // );
   const data = [
     {

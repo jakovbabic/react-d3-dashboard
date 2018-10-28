@@ -6,7 +6,8 @@ import {
   FETCH_SEGMENTOPTIONS_SUCCESS,
   FETCH_COUNTRYOPTIONS_SUCCESS,
   FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
-  SEARCH_CLIENTS_SUCCESS,
+  SAVE_CLIENTS_SUCCESS,
+  CLEAR_CLIENTS_SUCCESS,
 } from './types';
 
 export default function dashboardViewReducer(state = initialState.dashboard, action) {
@@ -30,9 +31,14 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       const data = action.payload;
       return { ...state, countryGroupOptions: data };
     }
-    case SEARCH_CLIENTS_SUCCESS: {
+    case SAVE_CLIENTS_SUCCESS: {
       const data = action.payload;
-      return { ...state, clients: data };
+      let clients = state.clients || [];
+      clients = clients.concat(data);
+      return { ...state, clients };
+    }
+    case CLEAR_CLIENTS_SUCCESS: {
+      return { ...state, clients: [] };
     }
     default:
       return state;

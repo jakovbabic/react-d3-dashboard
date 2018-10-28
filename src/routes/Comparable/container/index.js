@@ -9,6 +9,8 @@ import {
   loadSegmentOptionsAction,
   loadSectorOptionsAction,
   searchClientsAction,
+  saveClientsAction,
+  clearClientsAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
@@ -19,6 +21,7 @@ function mapStateToProps(state) {
     sectorOptions: state.comparableView.sectorOptions || [],
     countryOptions: state.comparableView.countryOptions || [],
     countryGroupOptions: state.comparableView.countryGroupOptions || [],
+    clients: state.comparableView.clients || [],
   };
 }
 
@@ -30,6 +33,8 @@ function mapDispatchToProps(dispatch) {
     loadSegmentOptions: bindActionCreators(loadSegmentOptionsAction, dispatch),
     loadSectorOptions: bindActionCreators(loadSectorOptionsAction, dispatch),
     search: bindActionCreators(searchClientsAction, dispatch),
+    save: bindActionCreators(saveClientsAction, dispatch),
+    clear: bindActionCreators(clearClientsAction, dispatch),
   };
 }
 

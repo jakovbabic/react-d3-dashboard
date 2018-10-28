@@ -5,6 +5,9 @@ body{
     padding: 20px;
     padding-bottom: 80px;
     background: $bgLightGray;
+    .clearfix{
+      clear: both;
+    }
     &__Dialog{
       z-index: 0 !important;
       & > div:nth-child(2){
@@ -12,14 +15,36 @@ body{
       }
     }
     &__AddModal{
-      &--formControl{
-        width: 100%;
-        margin-bottom: 10px !important;
-        &.small{
-          width: 45%;
+      &--search{
+        &--formControl{
+          width: 100%;
+          float: left;
+          margin-bottom: 10px !important;
+          &.small{
+            width: 45%;
+          }
+          .ant-select{
+            width: 100%;
+          }
+          &:nth-child(2n){
+            float: right !important;
+          }
         }
-        &.float-right{
-          float: right !important;
+      }
+      &--manual{
+        &--formControl{
+          width: 100%;
+          float: left;
+          margin-bottom: 10px !important;
+          &.small{
+            width: 45%;
+          }
+          .ant-select{
+            width: 100%;
+          }
+          &:nth-child(2n+1){
+            float: right !important;
+          }
         }
       }
       &--clients{
@@ -43,6 +68,9 @@ body{
       }
       p{
         cursor: pointer;
+        &.text-right{
+          text-align: right;
+        }
       }
     }
     &__logo {
@@ -76,40 +104,33 @@ body{
       border: solid 1px $gray;
       padding: 50px 20px;
       &--empty{
+        width: 240px;
+        height: 170px;
+        float: left;
+        margin: 10px;
         &--content{
-          width: 200px;
-          height: 100px;
           padding: 20px;
           border: dotted 2px $gray;
-          font-size: 20px;
+          font-size: 23px;
           display: flex;
           justify-content: center;
           align-items: center;
           cursor: pointer;
+          height: 140px;
         }
       }
       &--item{
-        padding: 20px !important;
-        position: relative;
-        height: 100%;
-        canvas{
-          max-height: 100% !important;
-          &[id]{
-            display: none !important;
-          }
-        }
-        &__container{
-          height: 90%;
-        }
-        &--setting{
-          position: absolute !important;
-          right: 0px;
-          top: 0px;
-        }
-        img{
-          position: absolute !important;
-          right: 30px;
-          bottom: 20px;
+        width: 240px;
+        height: 170px;
+        float: left;
+        margin: 10px;
+        &--content{
+          padding: 20px;
+          border: solid 2px $gray;
+          height: 140px;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
         }
       }
     }

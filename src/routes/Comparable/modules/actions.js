@@ -10,6 +10,7 @@ import {
   loadCountryGroupOptions,
   loadCountryOptions,
   searchClients,
+  saveClients,
 } from '../../../services/ComparableService';
 
 import {
@@ -18,6 +19,8 @@ import {
   FETCH_SEGMENTOPTIONS_SUCCESS,
   FETCH_COUNTRYOPTIONS_SUCCESS,
   FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
+  SAVE_CLIENTS_SUCCESS,
+  CLEAR_CLIENTS_SUCCESS,
 } from './types';
 
 export function loadTypeOptionsAction() {
@@ -92,6 +95,35 @@ export function searchClientsAction(data, callback) {
         callback(res);
         resolve(true);
       });
+    });
+  };
+}
+export function clearClientsAction() {
+  return (dispatch) => {
+    return dispatch({
+      type: CLEAR_CLIENTS_SUCCESS,
+    });
+  };
+}
+export function saveClientsAction(params, callback) {
+  return (dispatch) => {
+    return new Promise((resolve) => {
+      if (params.mode === 'auto') {
+        saveClients(params.ids).then((res) => {
+          dispatch({
+            type: SAVE_CLIENTS_SUCCESS,
+            payload: res,
+          });
+          callback();
+          resolve(true);
+        });
+      } else {
+        dispatch({
+          type: SAVE_CLIENTS_SUCCESS,
+          payload: params.data,
+        });
+        callback();
+      }
     });
   };
 }
