@@ -362,8 +362,6 @@ class AddModalContent extends Component {
       prop.save({
         mode: 'auto',
         ids: rlt,
-      }, () => {
-        prop.addModalClose();
       });
     }
   }
@@ -397,9 +395,27 @@ class AddModalContent extends Component {
           {
             !state.view.empty && this.getClientList()
           }
-          <Button onClick={this.save}>
-            { p.literals.modal.ok }
-          </Button>
+          {
+            state.clients.length === 0 && !state.view.empty && (
+              <Button onClick={this.search}>
+                { p.literals.modal.search }
+              </Button>
+            )
+          }
+          {
+            state.clients.length > 0 && !state.view.empty && (
+              <Button onClick={this.save}>
+                { p.literals.modal.compare }
+              </Button>
+            )
+          }
+          {
+            state.view.empty && (
+              <Button onClick={this.save}>
+                { p.literals.modal.createCompare }
+              </Button>
+            )
+          }
           <Button onClick={p.addModalClose}>
             { p.literals.modal.cancel }
           </Button>

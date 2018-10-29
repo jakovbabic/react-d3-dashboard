@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import 'react-grid-layout/css/styles.css';
-import { Select } from 'antd';
+import { Input, Select } from 'antd';
 import AddModalContent from './AddModalContent';
 import Navbar from '../../../components/Navbar/container/index';
 
@@ -29,15 +29,12 @@ class Comparable extends Component {
     loadCountryGroupOptions: PropTypes.func.isRequired,
     loadSegmentOptions: PropTypes.func.isRequired,
     loadSectorOptions: PropTypes.func.isRequired,
-    clear: PropTypes.func.isRequired,
-    save: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     literals: PropTypes.object.isRequired,
     typeOptions: PropTypes.array.isRequired,
     countryOptions: PropTypes.array.isRequired,
     countryGroupOptions: PropTypes.array.isRequired,
     segmentOptions: PropTypes.array.isRequired,
-    clients: PropTypes.array.isRequired,
     sectorOptions: PropTypes.array.isRequired,
   };
 
@@ -46,6 +43,7 @@ class Comparable extends Component {
     this.state = {
       modalTitle: '',
       modalOpen: false,
+      clients: [],
     };
   }
 
@@ -91,6 +89,43 @@ class Comparable extends Component {
    * @param {Obj} input event
    */
 
+  saveCallback = (data) => {
+    const st = this.state;
+    const clients = st.clients;
+    this.setState({
+      clients: clients.concat(data),
+    });
+    this.setState({ modalOpen: false });
+  };
+
+  save = (params) => {
+    const p = this.props;
+    p.save(params, this.saveCallback);
+  };
+
+  setFfee = (index, val) => {
+    const st = this.state;
+    const clients = st.clients;
+    clients[index].eeffVal = val;
+    this.setState(clients);
+  };
+
+  compare = () => {
+    const st = this.state;
+    const data = st.clients.map((e) => {
+      const rlt = {
+        client: e.id || '',
+        eeff: e.eeffVal || '',
+      };
+      if (e.eeff.length === 0) {
+        rlt.new = true;
+      }
+      return rlt;
+    });
+    const p = this.props;
+    p.compare(data);
+  };
+
   render() {
     const {
       literals,
@@ -100,13 +135,11 @@ class Comparable extends Component {
       segmentOptions,
       sectorOptions,
       search,
-      save,
-      clients,
-      clear,
     } = this.props;
     const {
       modalOpen,
       modalTitle,
+      clients,
     } = this.state;
     const Option = Select.Option;
     return (
@@ -132,7 +165,7 @@ class Comparable extends Component {
                 segmentOptions={segmentOptions}
                 sectorOptions={sectorOptions}
                 search={search}
-                save={save}
+                save={this.save}
               />
             </DialogContent>
           </Dialog>
@@ -154,23 +187,34 @@ class Comparable extends Component {
                       <p>
                         {literals.eeffList}
                       </p>
-                      <Select
-                        showSearch
-                        style={{ width: '100%' }}
-                        placeholder={literals.eeff}
-                        optionFilterProp='children'
-                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                      >
-                        {
-                          item.eeff && item.eeff.map((p, j) => {
-                            return (
-                              <Option value={p.alias} key={j}>
-                                { p.name }
-                              </Option>
-                            );
-                          })
-                        }
-                      </Select>
+                      {
+                        item.eeff.length > 0 && (
+                          <Select
+                            showSearch
+                            style={{ width: '100%' }}
+                            value={item.eeffVal}
+                            placeholder={literals.eeff}
+                            onChange={(val) => { this.setFfee(i, val); }}
+                            optionFilterProp='children'
+                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                          >
+                            {
+                              item.eeff && item.eeff.map((p, j) => {
+                                return (
+                                  <Option value={p.alias} key={j}>
+                                    { p.name }
+                                  </Option>
+                                );
+                              })
+                            }
+                          </Select>
+                        )
+                      }
+                      {
+                        item.eeff.length === 0 && (
+                          <Input onChange={(e) => { this.setFfee(i, e.target.value); }} placeholder={literals.eeff} value={item.eeffVal} />
+                        )
+                      }
                     </div>
                   </div>
                 );
@@ -187,7 +231,7 @@ class Comparable extends Component {
             <div className='clearfix' />
           </div>
           <div className='ClientsView--bottom'>
-            <Button variant='contained' onClick={clear}>
+            <Button variant='contained' onClick={this.compare}>
               { literals.create }
             </Button>
           </div>

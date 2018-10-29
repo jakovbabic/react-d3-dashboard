@@ -10,7 +10,7 @@ import {
   loadSectorOptionsAction,
   searchClientsAction,
   saveClientsAction,
-  clearClientsAction,
+  compareClientsAction,
 } from '../modules/actions';
 
 function mapStateToProps(state) {
@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
     loadSectorOptions: bindActionCreators(loadSectorOptionsAction, dispatch),
     search: bindActionCreators(searchClientsAction, dispatch),
     save: bindActionCreators(saveClientsAction, dispatch),
-    clear: bindActionCreators(clearClientsAction, dispatch),
+    compare: bindActionCreators(compareClientsAction, dispatch),
   };
 }
 

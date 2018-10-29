@@ -7,7 +7,7 @@ import {
   FETCH_COUNTRYOPTIONS_SUCCESS,
   FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
   SAVE_CLIENTS_SUCCESS,
-  CLEAR_CLIENTS_SUCCESS,
+  COMPARE_CLIENTS_SUCCESS,
 } from './types';
 
 export default function dashboardViewReducer(state = initialState.dashboard, action) {
@@ -37,8 +37,8 @@ export default function dashboardViewReducer(state = initialState.dashboard, act
       clients = clients.concat(data);
       return { ...state, clients };
     }
-    case CLEAR_CLIENTS_SUCCESS: {
-      return { ...state, clients: [] };
+    case COMPARE_CLIENTS_SUCCESS: {
+      return { ...state };
     }
     default:
       return state;

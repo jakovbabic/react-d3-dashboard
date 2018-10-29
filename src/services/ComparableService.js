@@ -3,7 +3,7 @@ import apiFetch from '../utils/apiFetch';
 export function loadSegmentOptions() {
   // return apiFetch(
   //   'GET',
-  //   { endPoint: 'aqua/eeff/client/segments' },
+  //   { endPoint: 'client/segments' },
   // );
   const data = ['Corporativa', 'IFIs', 'FFEE'];
   return new Promise((resolve) => {
@@ -13,7 +13,7 @@ export function loadSegmentOptions() {
 export function saveClients() {
   // return apiFetch(
   //   'GET',
-  //   { endPoint: `/aqua/eeff/comparable/select?clients=${JSON.stringify(param)}` },
+  //   { endPoint: `/comparable/select?clients=${JSON.stringify(param)}` },
   // );
   const data = [
     {
@@ -229,10 +229,31 @@ export function saveClients() {
     resolve(data);
   });
 }
+
+export function compareClients(data) {
+  return apiFetch(
+    'POST',
+    { endPoint: 'comparable/create' },
+    data,
+  );
+  // return new Promise((resolve) => {
+  //   resolve([]);
+  // });
+}
+export function createClients(data) {
+  return apiFetch(
+    'POST',
+    { endPoint: 'client' },
+    data,
+  );
+  // return new Promise((resolve) => {
+  //   resolve([]);
+  // });
+}
 export function searchClients() {
   // return apiFetch(
   //   'POST',
-  //   { endPoint: 'aqua/eeff/client/search' },
+  //   { endPoint: 'client/search' },
   //    params,
   // );
   const data = [
@@ -341,7 +362,7 @@ export function searchClients() {
 export function loadSectorOptions() {
   // return apiFetch(
   //   'GET',
-  //   { endPoint: 'aqua/eeff/client/sectors' },
+  //   { endPoint: 'client/sectors' },
   // );
   const data = [
     {
@@ -415,7 +436,7 @@ export function loadSectorOptions() {
 export function loadTypeOptions() {
   // return apiFetch(
   //     'GET',
-  //     { endPoint: 'aqua/eeff/client/types' },
+  //     { endPoint: 'client/types' },
   // );
   const data = [
     'ABF',
@@ -435,7 +456,7 @@ export function loadTypeOptions() {
 export function loadCountryGroupOptions() {
   // return apiFetch(
   //     'GET',
-  //     { endPoint: 'aqua/eeff/client/cgroup' },
+  //     { endPoint: 'client/cgroup' },
   // );
   const data = [
     'Alemania',
@@ -463,7 +484,7 @@ export function loadCountryGroupOptions() {
 export function loadCountryOptions() {
   // return apiFetch(
   //     'GET',
-  //     { endPoint: 'aqua/eeff/client/countries' },
+  //     { endPoint: 'client/countries' },
   // );
   const data = [
     'Afganistán',

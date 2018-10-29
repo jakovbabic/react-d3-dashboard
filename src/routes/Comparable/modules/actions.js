@@ -11,6 +11,8 @@ import {
   loadCountryOptions,
   searchClients,
   saveClients,
+  compareClients,
+  createClients,
 } from '../../../services/ComparableService';
 
 import {
@@ -20,7 +22,7 @@ import {
   FETCH_COUNTRYOPTIONS_SUCCESS,
   FETCH_COUNTRYGROUPOPTIONS_SUCCESS,
   SAVE_CLIENTS_SUCCESS,
-  CLEAR_CLIENTS_SUCCESS,
+  COMPARE_CLIENTS_SUCCESS,
 } from './types';
 
 export function loadTypeOptionsAction() {
@@ -98,10 +100,16 @@ export function searchClientsAction(data, callback) {
     });
   };
 }
-export function clearClientsAction() {
+export function compareClientsAction(data) {
   return (dispatch) => {
-    return dispatch({
-      type: CLEAR_CLIENTS_SUCCESS,
+    return new Promise((resolve) => {
+      compareClients(data).then((res) => {
+        dispatch({
+          type: COMPARE_CLIENTS_SUCCESS,
+          payload: res,
+        });
+        resolve(true);
+      });
     });
   };
 }
@@ -114,15 +122,18 @@ export function saveClientsAction(params, callback) {
             type: SAVE_CLIENTS_SUCCESS,
             payload: res,
           });
-          callback();
+          callback(res);
           resolve(true);
         });
       } else {
-        dispatch({
-          type: SAVE_CLIENTS_SUCCESS,
-          payload: params.data,
+        createClients(params.data).then((res) => {
+          dispatch({
+            type: SAVE_CLIENTS_SUCCESS,
+            payload: [res],
+          });
+          callback([res]);
+          resolve(true);
         });
-        callback();
       }
     });
   };
