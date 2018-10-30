@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './styles.css';
 import { Select, Input, Checkbox } from 'antd';
 import Button from '@material-ui/core/Button';
-import 'antd/dist/antd.min.css';
+import '../../../styles/components/antd.css';
 
 /**
  * @name AddModalContent Component

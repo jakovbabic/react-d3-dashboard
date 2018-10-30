@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { Radio, TreeSelect, Checkbox } from 'antd';
-import 'antd/dist/antd.min.css';
+import '../../../styles/components/antd.css';
 import {
   GRAPH_TYPE_BAR,
   GRAPH_TYPE_LINE,
