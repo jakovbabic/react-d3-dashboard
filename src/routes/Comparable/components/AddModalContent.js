@@ -190,7 +190,7 @@ class AddModalContent extends Component {
         </div>
         <div className='small ClientsView__AddModal--search--formControl'>
           <span>{p.literals.modal.rating}</span>
-          <Dropdown name='rating' onChange={this.setData} value={state.rating} placeholder={p.literals.modal.rating} options={p.segmentOptions} />
+          <Dropdown name='rating' onChange={this.setData} value={state.rating} placeholder={p.literals.modal.rating} options={p.ratingOptions} />
         </div>
         {
           state.segment === 'FFEE' && (
@@ -223,11 +223,11 @@ class AddModalContent extends Component {
         </div>
         <div className='small ClientsView__AddModal--manual--formControl'>
           <span>{p.literals.modal.code}</span>
-          <Input name='code' onChange={this.setManualInputData} placeholder={p.literals.modal.code} value={state.code} />
+          <Input name='code' onChange={this.setManualInputData} placeholder={p.literals.modal.code} value={state.manual.code} />
         </div>
         <div className='small ClientsView__AddModal--manual--formControl'>
           <span>{p.literals.modal.codeLocal}</span>
-          <Input name='codeLocal' onChange={this.setManualInputData} placeholder={p.literals.modal.codeLocal} value={state.codeLocal} />
+          <Input name='codeLocal' onChange={this.setManualInputData} placeholder={p.literals.modal.codeLocal} value={state.manual.codeLocal} />
         </div>
         <div className='small ClientsView__AddModal--manual--formControl'>
           <span>{p.literals.modal.segment}</span>
@@ -244,14 +244,14 @@ class AddModalContent extends Component {
           <Dropdown
             value={state.manual.sector}
             placeholder={p.literals.modal.segment}
-            options={this.getSectorOptions(state.segment)}
+            options={this.getSectorOptions(state.manual.segment)}
             name='sector'
             onChange={this.setManualData}
           />
         </div>
         <div className='small ClientsView__AddModal--manual--formControl'>
           <span>{p.literals.modal.rating}</span>
-          <Dropdown name='rating' onChange={this.setManualData} value={state.manual.rating} placeholder={p.literals.modal.rating} options={p.segmentOptions} />
+          <Dropdown name='rating' onChange={this.setManualData} value={state.manual.rating} placeholder={p.literals.modal.rating} options={p.ratingOptions} />
         </div>
         {
           state.manual.segment === 'FFEE' && (
@@ -299,6 +299,20 @@ class AddModalContent extends Component {
       </div>
     );
   }
+
+  invalid = () => {
+    const state = this.state;
+    const fields = ['name', 'code', 'codeLocal', 'segment', 'rating', 'sector', 'country', 'countryGroup'];
+    for (let i = 0; i < fields.length; i += 1) {
+      if (!state.manual[fields[i]] || state.manual[fields[i]] === '') {
+        return true;
+      }
+    }
+    if (state.manual.segment === 'FFEE' && state.manual.type === '') {
+      return true;
+    }
+    return false;
+  };
 
   checkedAll() {
     const state = this.state;
@@ -370,6 +384,7 @@ class AddModalContent extends Component {
     const p = this.props;
     const state = this.state;
     const Search = Input.Search;
+    const disabled = this.invalid();
     return (
       <div className='ClientsView__AddModal'>
         <div>
@@ -411,7 +426,7 @@ class AddModalContent extends Component {
           }
           {
             state.view.empty && (
-              <Button onClick={this.save}>
+              <Button onClick={this.save} disabled={disabled}>
                 { p.literals.modal.createCompare }
               </Button>
             )

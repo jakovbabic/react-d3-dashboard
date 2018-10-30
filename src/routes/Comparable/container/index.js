@@ -22,6 +22,7 @@ function mapStateToProps(state) {
     countryOptions: state.comparableView.countryOptions || [],
     countryGroupOptions: state.comparableView.countryGroupOptions || [],
     clients: state.comparableView.clients || [],
+    ratingOptions: [1, 2, 3, 4, 5],
   };
 }
 

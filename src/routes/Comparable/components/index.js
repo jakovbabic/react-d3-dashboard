@@ -36,6 +36,7 @@ class Comparable extends Component {
     countryGroupOptions: PropTypes.array.isRequired,
     segmentOptions: PropTypes.array.isRequired,
     sectorOptions: PropTypes.array.isRequired,
+    ratingOptions: PropTypes.array.isRequired,
   };
 
   constructor(props) {
@@ -134,6 +135,7 @@ class Comparable extends Component {
       countryGroupOptions,
       segmentOptions,
       sectorOptions,
+      ratingOptions,
       search,
     } = this.props;
     const {
@@ -164,6 +166,7 @@ class Comparable extends Component {
                 countryGroupOptions={countryGroupOptions}
                 segmentOptions={segmentOptions}
                 sectorOptions={sectorOptions}
+                ratingOptions={ratingOptions}
                 search={search}
                 save={this.save}
               />

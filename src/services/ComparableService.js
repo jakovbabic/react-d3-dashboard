@@ -10,12 +10,12 @@ export function loadSegmentOptions() {
     resolve(data);
   });
 }
-export function saveClients() {
+export function saveClients(params) {
   // return apiFetch(
   //   'GET',
-  //   { endPoint: `/comparable/select?clients=${JSON.stringify(param)}` },
+  //   { endPoint: `/comparable/select?clients=${JSON.stringify(params)}` },
   // );
-  const data = [
+  let data = [
     {
       id: 1,
       name: 'Client 001',
@@ -225,6 +225,9 @@ export function saveClients() {
       ],
     },
   ];
+  data = data.filter((e) => {
+    return params.indexOf(e.id) > -1;
+  });
   return new Promise((resolve) => {
     resolve(data);
   });
@@ -241,14 +244,14 @@ export function compareClients(data) {
   // });
 }
 export function createClients(data) {
-  return apiFetch(
-    'POST',
-    { endPoint: 'client' },
-    data,
-  );
-  // return new Promise((resolve) => {
-  //   resolve([]);
-  // });
+  // return apiFetch(
+  //   'POST',
+  //   { endPoint: 'client' },
+  //   data,
+  // );
+  return new Promise((resolve) => {
+    resolve(data);
+  });
 }
 export function searchClients() {
   // return apiFetch(

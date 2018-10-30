@@ -65,6 +65,9 @@ body{
         margin-left: 20px;
         background-color: $black;
         color: $white;
+        &:disabled{
+          background: $gray;
+        }
       }
       p{
         cursor: pointer;
