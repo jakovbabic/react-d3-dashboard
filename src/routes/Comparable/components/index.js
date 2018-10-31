@@ -11,13 +11,20 @@ import AddModalContent from './AddModalContent';
 import Navbar from '../../../components/Navbar/container/index';
 
 /**
- * @name DashboardViewPage
+ * @name Comparable Component
  *
- * @param {Object}   dashboard
- * @param {Object}   selectedTable
- * @param {Object}   tableOptions
- * @param {Object}   typeOptions
  * @param {Object}   literals
+ * @param {Array}   typeOptions
+ * @param {Array}   countryOptions
+ * @param {Array}   countryGroupOptions
+ * @param {Array}   segmentOptions
+ * @param {Array}   sectorOptions
+ * @param {Array}   ratingOptions
+ * @param {Func}   search
+ * @param {Func}   loadTypeOptions
+ * @param {Func}   loadCountryOptions
+ * @param {Func}   loadSegmentOptions
+ * @param {Func}   loadSectorOptions
  *
  * @returns {JSX}
  */
@@ -64,10 +71,9 @@ class Comparable extends Component {
   }
 
   /**
-   * @name setName
-   * Sets dashboard name state
+   * @name addModalOpen
+   * Open graph modal
    *
-   * @param {Obj} Dashboard
    */
 
   addModalOpen = () => {
@@ -85,9 +91,9 @@ class Comparable extends Component {
   };
 
   /**
-   * @name changeName
-   * Sets name state when change dashboard name
-   * @param {Obj} input event
+   * @name saveCallback
+   * call after add comparable clients
+   * @param {Array} data
    */
 
   saveCallback = (data) => {
@@ -98,11 +104,22 @@ class Comparable extends Component {
     });
     this.setState({ modalOpen: false });
   };
+  /**
+   * @name save
+   * add comparable clients
+   * @param {Array} data
+   */
 
   save = (params) => {
     const p = this.props;
     p.save(params, this.saveCallback);
   };
+  /**
+   * @name setFfee
+   * set ffee of comparable clients
+   * @param {Number} index
+   * @param {String} val
+   */
 
   setFfee = (index, val) => {
     const st = this.state;
@@ -110,6 +127,10 @@ class Comparable extends Component {
     clients[index].eeffVal = val;
     this.setState(clients);
   };
+  /**
+   * @name compare
+   * save comparable view
+   */
 
   compare = () => {
     const st = this.state;
@@ -126,6 +147,10 @@ class Comparable extends Component {
     const p = this.props;
     p.compare(data);
   };
+  /**
+   * @name render
+   * render view
+   */
 
   render() {
     const {

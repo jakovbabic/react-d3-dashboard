@@ -7,14 +7,16 @@ import '../../../styles/components/antd.scss';
 /**
  * @name AddModalContent Component
  *
- * @param {Object}   dashboard
  * @param {Object}   literals
- * @param {Object}   selectedTable
  * @param {Array}   typeOptions
- * @param {Array}   tableOptions
+ * @param {Array}   countryOptions
+ * @param {Array}   countryGroupOptions
+ * @param {Array}   segmentOptions
+ * @param {Array}   sectorOptions
+ * @param {Array}   ratingOptions
  * @param {Func}   addModalClose
- * @param {Func}   saveModal
- * @param {Func}   dashboardChange
+ * @param {Func}   save
+ * @param {Func}   search
  *
  * @returns {JSX}
  */
@@ -87,6 +89,12 @@ class AddModalContent extends Component {
     this.search = this.search.bind(this);
     this.save = this.save.bind(this);
   }
+  /**
+   * @name setData
+   * Set state when change the select value
+   * @param {String}  val
+   * @param {String}  key
+   */
 
   setData(val, key) {
     const ob = {};
@@ -96,12 +104,23 @@ class AddModalContent extends Component {
     }
     this.setState(ob);
   }
+  /**
+   * @name setInputData
+   * Set state when change the input value
+   * @param {Obj}  e
+   */
 
   setInputData(e) {
     const ob = {};
     ob[e.target.name] = e.target.value;
     this.setState(ob);
   }
+  /**
+   * @name setManualData
+   * Set state when change the client select value
+   * @param {String}  val
+   * @param {String}  key
+   */
 
   setManualData(val, key) {
     const st = this.state;
@@ -111,6 +130,11 @@ class AddModalContent extends Component {
       manual: ob,
     });
   }
+  /**
+   * @name setManualInputData
+   * Set state when change the client input value
+   * @param {Obj}  e
+   */
 
   setManualInputData(e) {
     const st = this.state;
@@ -120,6 +144,10 @@ class AddModalContent extends Component {
       manual: ob,
     });
   }
+  /**
+   * @name setToggleEmpty
+   * Toggle the manual input view
+   */
 
   setToggleEmpty() {
     const st = this.state;
@@ -130,6 +158,10 @@ class AddModalContent extends Component {
       },
     });
   }
+  /**
+   * @name setToggleAdvance
+   * Toggle the advanced search view
+   */
 
   setToggleAdvance() {
     const st = this.state;
@@ -140,6 +172,11 @@ class AddModalContent extends Component {
       },
     });
   }
+  /**
+   * @name getSectorOptions
+   * get sector options whenever change segment option
+   * @param {Obj}  param
+   */
 
   getSectorOptions(param) {
     const prop = this.props;
@@ -154,6 +191,10 @@ class AddModalContent extends Component {
     }
     return rlt;
   }
+  /**
+   * @name getAdvancedOptions
+   * get view part of advanced options
+   */
 
   getAdvancedOptions() {
     const p = this.props;
@@ -211,6 +252,10 @@ class AddModalContent extends Component {
       </div>
     );
   }
+  /**
+   * @name getManualForm
+   * get view part of manual client input
+   */
 
   getManualForm() {
     const p = this.props;
@@ -272,6 +317,10 @@ class AddModalContent extends Component {
       </div>
     );
   }
+  /**
+   * @name getClientList
+   * get view part of searched client list
+   */
 
   getClientList() {
     const state = this.state;
@@ -299,6 +348,10 @@ class AddModalContent extends Component {
       </div>
     );
   }
+  /**
+   * @name invalid
+   * return invalid state of manual client input
+   */
 
   invalid = () => {
     const state = this.state;
@@ -313,6 +366,10 @@ class AddModalContent extends Component {
     }
     return false;
   };
+  /**
+   * @name checkedAll
+   * return checkedall state of clients
+   */
 
   checkedAll() {
     const state = this.state;
@@ -321,6 +378,12 @@ class AddModalContent extends Component {
     });
     return unchecked.length === 0;
   }
+  /**
+   * @name clientCheck
+   * set check state of selected client
+   * @param {Number}  index
+   * @param {Boolean}  val
+   */
 
   clientCheck(index, val) {
     const st = this.state;
@@ -332,6 +395,10 @@ class AddModalContent extends Component {
     });
     this.setState(clients);
   }
+  /**
+   * @name search
+   * search the clients with advanced options
+   */
 
   search() {
     const state = this.state;
@@ -353,6 +420,10 @@ class AddModalContent extends Component {
       });
     });
   }
+  /**
+   * @name save
+   * save the clients with advanced options
+   */
 
   save() {
     const st = this.state;
@@ -379,6 +450,10 @@ class AddModalContent extends Component {
       });
     }
   }
+  /**
+   * @name render
+   * Render view.
+   */
 
   render() {
     const p = this.props;
