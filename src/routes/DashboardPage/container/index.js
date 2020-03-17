@@ -9,6 +9,7 @@ import {
 } from '../modules/actions';
 
 function mapStateToProps(state) {
+  console.log('====dashboard====', state.dashboard.dashboards);
   return {
     dashboards: state.dashboard.dashboards || [],
     totalDashboards: state.dashboard.dashboards || [],
